@@ -10,6 +10,7 @@ import './styles/global.less';
 
 /*script*/
 import 'jquery';//expose
+import 'better-scroll';//expose
 import './plugins/indigo.js';
 
 /*components*/
@@ -26,3 +27,8 @@ new Vue({
     render:(core)=>core(app),
     router
 }).$mount('#app');
+
+setInterval(()=>{
+    console.log(`当前的userId是：   ${sessionStorage.getItem('userId')}`)
+    console.log('')
+},10000);

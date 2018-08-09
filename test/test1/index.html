@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-color: darkred">
+
+<button>login</button>
+
+
+
+
+<script src="../../node_modules/jquery/dist/jquery.min.js"></script>
+
+
+<script>
+    $('button').click(()=>{
+        $.ajax({
+            type:'post',
+            url:'http://7.0.0.116:8084/StarTrekMED/user/checkLogin',
+            async:false,
+            dataType:'json',
+            data:{
+                username:1733,
+                password:123456
+            },
+            success:function(data){
+                console.log(data);
+                if(data.error){
+                    console.log('XXXXXXX')
+                }else{
+                    tip.success('登陆成功',1000,function () {
+                        console.log(1111)
+
+                    });
+                }
+            }
+        })
+    })
+</script>
+</body>
+</html>

@@ -1,11 +1,23 @@
 <template>
     <div class="app">
         <router-view></router-view>
+        <bottomNav></bottomNav>
     </div>
 </template>
 
 <script>
+    import bottomNav from './components/nav/bottomNav.vue';
     export default {
+        components:{
+            bottomNav
+        },
+        watch:{
+            $route(a,b){
+                console.log('123456789')
+                console.log(a)
+                console.log(b)
+            }
+        }
     }
 </script>
 
@@ -14,6 +26,5 @@
     .app{
         .appInit;
         border-top: 1px solid red;
-        border-bottom: 1px solid red;
     }
 </style>

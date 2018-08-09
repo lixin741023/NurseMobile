@@ -1,6 +1,6 @@
 <template>
     <div class="optionA">
-        <div class="top"></div>
+        <p>optionA</p>
     </div>
 </template>
 

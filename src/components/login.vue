@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {tip} from '../js/global.js';
+    import {tip,con} from '../js/global.js';
     export default {
         name: "login",
         data:()=>({
@@ -44,12 +44,14 @@
                         username:this.user,
                         password:this.pas
                     },
-                        success:function(data){
+                    success:function(data){
+                        con('登陆',data);
                         if(data.error){
-                            tip.failed(data.message,1300);
+                            tip.failed(data.message,1500);
                         }else{
                             tip.success('登陆成功',1000,function () {
-                                this_.$router.push({name:'optionA'})
+                                sessionStorage.setItem('userId',data.resultDomain.user.id);
+                                this_.$router.push({name:'optionA'});
                             });
                         }
                     }
@@ -62,11 +64,11 @@
 <style scoped lang="less">
     @import url('../styles/custom.less');
     .login{
+        .componentsInit;
         display: flex;
+        height: 6.7rem;
         flex-direction: column;
         align-items: center;
-        .componentsInit;
-        height: 100%;
         background-color: #617fde;
         .loginImg{
             margin-top: 0.5rem;

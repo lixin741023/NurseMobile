@@ -13,7 +13,7 @@ const devConfig={
     },
     devServer:{
         contentBase:'./',
-        port:6001,
+        port:8084,
         hot:true
     },
     module:{
@@ -35,13 +35,6 @@ const devConfig={
                     }
                 }
             },
-            // {
-            //     test:require.resolve('../src/js/global.js'),
-            //     use:[{
-            //         loader:'expose-loader',
-            //         options:'globalSetting'
-            //     }]
-            // },
             {
                 test:require.resolve('jquery'),
                 use:[{

@@ -25,5 +25,10 @@ class tip {
         },time+100);
     }
 }
+function con(text,data) {
+    console.log('--------------------------------');
+    console.log(text,data);
+    console.log('')
+}
 
-export {url,tip}
+export {url,tip,con}
