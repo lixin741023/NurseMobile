@@ -13,9 +13,7 @@
         },
         watch:{
             $route(a,b){
-                console.log('123456789')
-                console.log(a)
-                console.log(b)
+
             }
         }
     }

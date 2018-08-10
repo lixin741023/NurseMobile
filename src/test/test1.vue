@@ -14,6 +14,7 @@
                 <li>1</li>
                 <li>1</li>
             </div>
+            <div v-show="aaa">111</div>
         </div>
     </div>
 </template>
@@ -24,6 +25,13 @@
         name: "test1",
         mounted:()=>{
             new BScroll('.a')
+        },
+        computed:{
+            aaa(a){
+                console.log('------------')
+                console.log(a)
+                return true
+            }
         }
     }
 </script>

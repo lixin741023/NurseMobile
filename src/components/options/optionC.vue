@@ -1,17 +1,21 @@
 <template>
     <div class="optionC">
         <div class="navTitle">
-            <span v-for="(a,b) in mockData" :class="{'active_navTitle':active===a.id}" @click="tabControl(a)">
+            <span v-for="(a,b) in mockData" :class="{'active_navTitle':active===a.id}" @click="active=a.id">
                 {{a.name}}
             </span>
         </div>
         <mt-tab-container class="navBox" v-model="active" style="border: 1px solid red" :swipeable="true"><!-- :swipeable="true"-->
             <mt-tab-container-item v-for="(a,b) in mockData" :id="a.id" :key="a.id">
                 <div class="navContainer">
-                    <div v-for="(a,b) in a.children" class="navContainer_item" @click="popupVisibleControl()">
+                    <div v-for="(a,b) in a.children" class="navContainer_item" @touchstart="gtouchstart(popupVisibleControl,a.id)" @touchmove="gtouchmove()" @touchend="gtouchend(test1)" >
+                        <div class="set" v-show="class_top(a.id)||class_often(a.id)">
+                            <span class="top" v-show="class_top(a.id)">顶置</span>
+                            <span class="fav" v-show="class_often(a.id)">常用</span>
+                        </div>
                         <em>{{a.url}}</em>
                         <img :src="url+a.icon">
-                        <span>{{a.name}}</span>
+                        <span class="name">{{a.name}}</span>
                     </div>
                 </div>
             </mt-tab-container-item>
@@ -19,11 +23,11 @@
         <bottomNavBlock></bottomNavBlock>
 
         <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom" class="popupText">
-            <div>设置到首页置顶</div>
-            <div>设置到首页常用</div>
-            <div class="remove">从首页置顶中移除</div>
-            <div class="remove">从首页常用中移除</div>
-            <div class="cancel" @click="cancelPopupVisible">取消</div>
+            <div v-show="setTop" @click="topControl('add')">设置到首页置顶</div>
+            <div v-show="setOften" @click="oftenControl('add')">设置到首页常用</div>
+            <div v-show="!setTop" @click="topControl('remove')" class="remove">从首页置顶中移除</div>
+            <div v-show="!setOften" @click="oftenControl('remove')" class="remove">从首页常用中移除</div>
+            <div class="cancel" @click="popupVisible=false">取消</div>
         </mt-popup>
 
     </div>
@@ -39,27 +43,80 @@
     import { Popup } from 'mint-ui';
     Vue.component(Popup.name, Popup);
 
+    let timeOutEvent;
     export default {
         name: "optionC",
         data:()=>({
-            popupVisible:true,
+            setTop:undefined,
+            setOften:undefined,
+            itemId:undefined,
+            settingArray:{
+                top:[],
+                often:[]
+            },
+            popupVisible:false,
             url:url,
             mockData:undefined,
             active:'tab-container1'
         }),
-        methods:{
-            tabControl:function(a){
-                this.active=a.id;
-            },
-            popupVisibleControl(){
-                this.popupVisible=true;
-            },
-            cancelPopupVisible(){
-                this.popupVisible=false;
-            }
-        },
         components:{
             bottomNavBlock:bottomNav_block
+        },
+        computed:{
+
+        },
+        methods:{
+            topControl(type){
+                if(type==='add'){
+                   this.settingArray.top.push(this.itemId)
+                }else if(type==='remove'){
+                    this.settingArray.top.splice(this.settingArray.top.indexOf(this.itemId),1)
+                }
+            },
+            oftenControl(type){
+                if(type==='add'){
+                    this.settingArray.often.push(this.itemId)
+                }else if(type==='remove'){
+                    this.settingArray.often.splice(this.settingArray.often.indexOf(this.itemId),1)
+                }
+            },
+            class_top(id){
+                return this.settingArray.top.indexOf(id) !== -1;
+            },
+            class_often(id){
+                return this.settingArray.often.indexOf(id) !== -1;
+            },
+            popupVisibleControl(id){
+                this.popupVisible=true;
+                this.itemId=id;
+                this.setTop=this.settingArray.top.indexOf(id)===-1;
+                this.setOften=this.settingArray.often.indexOf(id)===-1;
+            },
+            gtouchstart:function gtouchstart(fun,id){
+                timeOutEvent = setTimeout(function(){
+                    timeOutEvent = 0;
+                    fun(id);
+                },500);
+                return false;
+            },
+            gtouchmove:function gtouchmove(){
+                clearTimeout(timeOutEvent);
+                timeOutEvent = 0;
+            },
+            gtouchend:function gtouchend(fun){
+                clearTimeout(timeOutEvent);
+                if(timeOutEvent!=0){
+                    fun();
+                }
+                return false;
+            },
+            longPress:function longPress(){
+                timeOutEvent = 0;
+                console.log('长按…………');
+            },
+            test1(){
+                console.log('test1_click');
+            }
         },
          beforeMount:function () {
             $.ajax({
@@ -77,6 +134,16 @@
                     }else{
                         this.mockData=data.resultDomains;
                         this.active=this.mockData[0].id;
+                        for(let i=0; i<data.resultDomains.length; i++){
+                            for(let x=0; x<data.resultDomains[i].children.length; x++){
+                                if(data.resultDomains[i].children[x].top){
+                                    this.settingArray.top.push(data.resultDomains[i].children[x].id)
+                                }
+                                if(data.resultDomains[i].children[x].often){
+                                    this.settingArray.often.push(data.resultDomains[i].children[x].id)
+                                }
+                            }
+                        }
                     }
                 }
             });
@@ -114,6 +181,9 @@
             flex-wrap: wrap;
             justify-content: space-around;
             .navContainer_item{
+                box-sizing: border-box;
+                padding-top: 0.18rem;
+                overflow: hidden;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -126,15 +196,29 @@
                 &:active{
                     background-color: @activeEvent;
                 }
-                img{
-                    width: 0.5rem;
-                    height: 0.5rem;
+                .set{
+                    display: flex;
+                    box-sizing: border-box;
+                    justify-content: space-around;
+                    position: absolute;
+                    top: 0.1rem;
+                    right: -0.3rem;
+                    width: 100%;
+                    padding: 0.02rem 0.23rem;
+                    transform: rotateZ(40deg);
+                    background-color: #27b6f5;
+                    color: #fff;
+                    font-size: 0.12rem;
                 }
-                span{
-                    margin-top: -0.2rem;
+                img{
+                    width: 0.4rem;
+                    height: 0.4rem;
+                }
+                .name{
                     font-size: 0.14rem;
                 }
                 em{
+                    display: none;
                     position: absolute;
                     top: 10px;
                 }
