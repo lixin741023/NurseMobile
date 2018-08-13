@@ -24,12 +24,11 @@
 
         <mt-popup v-model="popupVisible" popup-transition="popup-fade" position="bottom" class="popupText">
             <div v-show="setTop" @click="topControl('add')">设置到首页置顶</div>
-            <div v-show="setOften" @click="oftenControl('add')">设置到首页常用</div>
             <div v-show="!setTop" @click="topControl('remove')" class="remove">从首页置顶中移除</div>
+            <div v-show="setOften" @click="oftenControl('add')">设置到首页常用</div>
             <div v-show="!setOften" @click="oftenControl('remove')" class="remove">从首页常用中移除</div>
             <div class="cancel" @click="popupVisible=false">取消</div>
         </mt-popup>
-
     </div>
 </template>
 
@@ -47,8 +46,8 @@
     export default {
         name: "optionC",
         data:()=>({
-            setTop:undefined,
-            setOften:undefined,
+            whether:undefined,
+            whetherSettingArray:false,
             itemId:undefined,
             settingArray:{
                 top:[],
@@ -63,34 +62,49 @@
             bottomNavBlock:bottomNav_block
         },
         computed:{
-
+            setTop(){
+                return this.settingArray.top.indexOf(this.itemId)===-1;
+            },
+            setOften(){
+                return this.settingArray.often.indexOf(this.itemId)===-1;
+            }
         },
         methods:{
-            topControl(type){
-                if(type==='add'){
-                   this.settingArray.top.push(this.itemId)
-                }else if(type==='remove'){
-                    this.settingArray.top.splice(this.settingArray.top.indexOf(this.itemId),1)
-                }
-            },
-            oftenControl(type){
-                if(type==='add'){
-                    this.settingArray.often.push(this.itemId)
-                }else if(type==='remove'){
-                    this.settingArray.often.splice(this.settingArray.often.indexOf(this.itemId),1)
-                }
-            },
             class_top(id){
                 return this.settingArray.top.indexOf(id) !== -1;
             },
             class_often(id){
                 return this.settingArray.often.indexOf(id) !== -1;
             },
+            topControl(type){
+                if(type==='add'){
+                    if(this.settingArray.top.length===4){
+                        tip.failed('最多只能设置4项顶置哦');
+                        return;
+                    }
+                   this.settingArray.top.push(this.itemId);
+                }else if(type==='remove'){
+                    this.settingArray.top.splice(this.settingArray.top.indexOf(this.itemId),1)
+                }
+                this.whetherSettingArray=true;
+                tip.fromTop('设置成功');
+            },
+            oftenControl(type){
+                if(type==='add'){
+                    if(this.settingArray.often.length===8){
+                        tip.failed('最多只能设置8项常用哦');
+                        return;
+                    }
+                    this.settingArray.often.push(this.itemId)
+                }else if(type==='remove'){
+                    this.settingArray.often.splice(this.settingArray.often.indexOf(this.itemId),1)
+                }
+                this.whetherSettingArray=true;
+                tip.fromTop('设置成功');
+            },
             popupVisibleControl(id){
                 this.popupVisible=true;
                 this.itemId=id;
-                this.setTop=this.settingArray.top.indexOf(id)===-1;
-                this.setOften=this.settingArray.often.indexOf(id)===-1;
             },
             gtouchstart:function gtouchstart(fun,id){
                 timeOutEvent = setTimeout(function(){
@@ -110,15 +124,11 @@
                 }
                 return false;
             },
-            longPress:function longPress(){
-                timeOutEvent = 0;
-                console.log('长按…………');
-            },
             test1(){
                 console.log('test1_click');
             }
         },
-         beforeMount:function () {
+        beforeMount:function () {
             $.ajax({
                 type:'post',
                 url:url+'/operatorAddress/queryUserOpeToAdd',
@@ -130,8 +140,9 @@
                 success:(data)=>{
                     con('菜单权限',data);
                     if(data.error){
-                        tip.failed(data.message,1500)
+                        tip.failed(data.message,1500);
                     }else{
+                        this.whether=data.parameter;
                         this.mockData=data.resultDomains;
                         this.active=this.mockData[0].id;
                         for(let i=0; i<data.resultDomains.length; i++){
@@ -147,6 +158,33 @@
                     }
                 }
             });
+        },
+        beforeRouteLeave(a,b,next){
+            if(!this.whetherSettingArray){
+                next()
+            }else{
+                $.ajax({
+                    type:'post',
+                    url:url+'/operatorAddress/saveAndUpdateMed',
+                    async: false,
+                    dataType:'json',
+                    data:{
+                        'id':this.whether,
+                        'userId.id':sessionStorage.getItem('userId'),
+                        'content':JSON.stringify(this.settingArray)
+                    },
+                    success:function (data) {
+                        con('配置上传返回',data);
+                        if(data.error){
+                            tip.failed(data.message,1500);
+                        }else{
+                            tip.success('设置保存成功',1000,function () {
+                                next()
+                            })
+                        }
+                    }
+                })
+            }
         }
     }
 </script>
@@ -179,8 +217,8 @@
         .navContainer{
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
             .navContainer_item{
+                margin-left: 0.05rem;
                 box-sizing: border-box;
                 padding-top: 0.18rem;
                 overflow: hidden;
@@ -218,7 +256,7 @@
                     font-size: 0.14rem;
                 }
                 em{
-                    display: none;
+                    /*display: none;*/
                     position: absolute;
                     top: 10px;
                 }

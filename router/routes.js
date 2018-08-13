@@ -5,6 +5,7 @@ import optionB from '../src/components/options/optionB.vue';
 import optionC from '../src/components/options/optionC.vue';
 import optionD from '../src/components/options/optionD.vue';
 import optionE from '../src/components/options/optionE.vue';
+import YiZhuJiaoDui from '../src/components/function/YiZhuJiaoDui.vue';
 
 let routes=[
     {
@@ -36,6 +37,11 @@ let routes=[
         name:'optionE',
         path:'/optionE',
         component:optionE
+    },
+    {
+        name:'YiZhuJiaoDui',
+        path:'/function/YiZhuJiaoDui',
+        component:YiZhuJiaoDui
     },
     {//重定向
         name:'default',

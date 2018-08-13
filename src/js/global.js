@@ -23,6 +23,17 @@ class tip {
         setTimeout(()=>{
             fun()
         },time+100);
+    };
+    static fromTop(text,time=850,fun){
+        Toast({
+            message:text,
+            position:'top',
+            duration:time
+        });
+        if(!fun){return}
+        setTimeout(()=>{
+            fun()
+        },time+100);
     }
 }
 function con(text,data) {
@@ -30,5 +41,4 @@ function con(text,data) {
     console.log(text,data);
     console.log('')
 }
-
 export {url,tip,con}

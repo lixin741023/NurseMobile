@@ -20,7 +20,7 @@
 </template>
 
 <script>
-    import {tip,con} from '../js/global.js';
+    import {tip,con,userId} from '../js/global.js';
     export default {
         name: "login",
         data:()=>({
