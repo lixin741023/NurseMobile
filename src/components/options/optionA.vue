@@ -4,38 +4,28 @@
             <div class="search" v-show="whether_search_HuanZhe">
                 <div class="a">
                     <span class="fa fa-search"></span>
-                    <input type="text" maxlength="50" v-model="searchContent" placeholder="请输入患者腕带上的编号" @keydown="executeSearch">
+                    <input maxlength="30" type="number" v-model="searchContent" placeholder="请输入患者腕带上的编号" >
+                    <span v-show="searchContent.length!==0" @click="searchContent=''" class="fa fa-close"></span>
                 </div>
-                <ul class="searchResult">
-                    <div>
-                        <li>
-                            <span>12床</span>
-                            <span>张立科</span>
-                            <span>男</span>
-                        </li>
-                        <li>
-                            <span>13床</span>
-                            <span>张立科</span>
-                            <span>男</span>
-                        </li>
-                        <li>
-                            <span>14床</span>
-                            <span>张立科</span>
-                            <span>女</span>
-                        </li>
-                    </div>
+                <ul v-show="searchContent.length>=8" class="searchResult">
+                    <li class="x" v-for="(a,b) in searchResult" @click="makeSure_HuanZhe(a)">
+                        <span>{{a.bedName}}床</span>
+                        <span>{{a.name}}</span>
+                        <span>{{a.sex}}</span>
+                    </li>
+                    <li v-show="searchResult.length===0" style="color: #c7c8c8;text-align: center">未查询到患者数据……</li>
                 </ul>
                 <img class="b" src="../../images/QRscan.png" >
             </div>
             <div class="HuanZhe" v-show="!whether_search_HuanZhe">
                 <div class="a">
                     <div>
-                        <span>12床</span>
-                        <span>张立科</span>
-                        <span>（男 24岁）</span>
-                        <span>20180823991230</span>
+                        <span>{{HuanZhe_Info.bedName}}</span>
+                        <span>{{HuanZhe_Info.name}}</span>
+                        <span>（{{HuanZhe_Info.sex}} {{HuanZhe_Info.age}}）</span>
+                        <span>{{HuanZhe_Info.number}}</span>
                     </div>
-                    <img src="../../images/index_close.png" @click="whether_search_HuanZhe=true">
+                    <img @click="whether_search_HuanZhe=true" src="../../images/index_close.png" >
                 </div>
             </div>
             <div class="top">
@@ -59,41 +49,68 @@
             </router-link>
         </div>
         <bottomNavBlock></bottomNavBlock>
+        <input type="text" v-model="searchResult">
     </div>
 </template>
 
 <script>
     import {url,con,tip} from "../../js/global";
     import bottomNav_block from '../nav/bottomNav_block.vue';
-    import BScroll from 'better-scroll';
+
     export default {
         name: "optionA",
         data:()=>({
+            HuanZhe_Info:{},
+            searchResult:[],
             searchContent:'',
             whether_search_HuanZhe:true,
             mockData:{
                 resultDomain:''
             },
-            url:url
+            url:url,
         }),
+        watch:{
+            searchContent(a,b){
+                if(this.searchContent.length>=8){
+                    $.ajax({
+                        post:'get',
+                        url:url+'/user/queryByclinic',
+                        async:true,
+                        dataType: 'json',
+                        data:{
+                            userId:sessionStorage.getItem('userId'),
+                            clinicNum:this.searchContent
+                        },
+                        success:(data)=>{
+                            con('患者搜索结果',data);
+                            if(data.error){
+                                tip.failed(data.message,1500);
+                            }else{
+                                this.searchResult=data.resultDomains;
+                            }
+                        }
+                    })
+                }
+            }
+        },
         components:{
             bottomNavBlock:bottomNav_block
         },
         methods:{
-            executeSearch(){
-                console.log(this.searchContent);
-            },
             toFun(dest){
                 this.$router.push({
                     name:dest
                 })
+            },
+            makeSure_HuanZhe(a){
+                this.HuanZhe_Info=a;
+                this.whether_search_HuanZhe=false;
             }
         },
         computed:{
 
         },
         beforeMount:function(){
-            return;
             $.ajax({
                 type:'get',
                 url:url+'/operatorAddress/queryByUserId',
@@ -113,7 +130,7 @@
             });
         },
         mounted:function(){
-            new BScroll('.searchResult',{click: true});
+
         },
     }
 </script>
@@ -143,6 +160,11 @@
                         color: #1F92C4;
                         font-size: 0.16rem;
                     }
+                    .fa-close{
+                        color: #fff;
+                        margin-left: 0.1rem;
+                        font-size: 0.13rem;
+                    }
                     input{
                         width: 80%;
                         color: #fff;
@@ -171,23 +193,41 @@
                     height: 0.3rem;
                 }
                 .searchResult{
-                    height: 1.5rem;
+                    overflow-y: scroll;
+                    max-height: 1.8rem;
                     z-index: 4;
                     background-color: #fff;
                     padding: 0 0.15rem;
-                    border: 1px solid #27B6F5;
+                    /*border: 10px solid #27B6F5;*/
+                    border: 1px solid #25ADE9;
                     left: 0.35rem;
                     top: 0.4rem;
                     width: 2.5rem;
                     position: absolute;
                     font-size: 0.14rem;
                     li{
+                        position: relative;
                         padding: 0.09rem 0.1rem;
+                        height: 0.15rem;
                         border-bottom: 0.01rem dashed #ccc;
-                        span:nth-child(2){
-                            margin-left: 0.2rem;
-                            margin-right: 0.2rem;
+                        &:last-child{
+                            border: 0;
                         }
+                        span{
+                            position: absolute;
+                        }
+                        span:nth-child(1){
+                            left: 0.1rem;
+                        }
+                        span:nth-child(2){
+                            left: 0.9rem;
+                        }
+                        span:nth-child(3){
+                            left: 1.9rem;
+                        }
+                    }
+                    .x:active{
+                        background-color: @activeEvent;
                     }
                 }
             }
@@ -210,8 +250,8 @@
                         color: #fff;
                     }
                     img{
-                        width: 0.22rem;
-                        height: 0.22rem;
+                        width: 0.2rem;
+                        height: 0.2rem;
                     }
                 }
             }

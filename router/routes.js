@@ -6,6 +6,8 @@ import optionC from '../src/components/options/optionC.vue';
 import optionD from '../src/components/options/optionD.vue';
 import optionE from '../src/components/options/optionE.vue';
 import YiZhuJiaoDui from '../src/components/function/YiZhuJiaoDui.vue';
+import YiZhuJiaoDui_detail from '../src/components/function/YiZhuJiaoDui_detail.vue';
+
 
 let routes=[
     {
@@ -42,6 +44,11 @@ let routes=[
         name:'YiZhuJiaoDui',
         path:'/function/YiZhuJiaoDui',
         component:YiZhuJiaoDui
+    },
+    {
+        name:'YiZhuJiaoDui_detail',
+        path:'/function/YiZhuJiaoDui/:YiZhuJiaoDui_detail',
+        component:YiZhuJiaoDui_detail
     },
     {//重定向
         name:'default',
