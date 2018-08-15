@@ -1,0 +1,1 @@
+1、打包为App后，注意测试YiZhuJiaoDui_detail.vue下，多行省略号是否兼容。（理论值：webkit）

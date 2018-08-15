@@ -8,7 +8,7 @@
         <mt-tab-container class="navBox" v-model="active" style="border: 1px solid red" :swipeable="true"><!-- :swipeable="true"-->
             <mt-tab-container-item v-for="(a,b) in mockData" :id="a.id" :key="a.id">
                 <div class="navContainer">
-                    <div v-for="(a,b) in a.children" class="navContainer_item" @touchstart="gtouchstart(popupVisibleControl,a.id)" @touchmove="gtouchmove()" @touchend="gtouchend(test1)" >
+                    <div v-for="(a,b) in a.children" class="navContainer_item" @touchstart="gtouchstart(popupVisibleControl,a.id)" @touchmove="gtouchmove()" @touchend="gtouchend(R_fun,a.url)" >
                         <div class="set" v-show="class_top(a.id)||class_often(a.id)">
                             <span class="top" v-show="class_top(a.id)">顶置</span>
                             <span class="fav" v-show="class_often(a.id)">常用</span>
@@ -117,15 +117,15 @@
                 clearTimeout(timeOutEvent);
                 timeOutEvent = 0;
             },
-            gtouchend:function gtouchend(fun){
+            gtouchend:function gtouchend(fun,url){
                 clearTimeout(timeOutEvent);
                 if(timeOutEvent!=0){
-                    fun();
+                    fun(url);
                 }
                 return false;
             },
-            test1(){
-                console.log('test1_click');
+            R_fun(url){
+                this.$router.push({name:url});
             }
         },
         beforeMount:function () {
@@ -192,6 +192,7 @@
 <style scoped lang="less">
     @import url('../../styles/custom.less');
     .optionC{
+        .componentsInit;
         .navTitle{
             box-sizing: border-box;
             border-bottom: 0.015rem solid #F4F4F4;

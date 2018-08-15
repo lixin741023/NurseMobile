@@ -48,7 +48,8 @@ let routes=[
     {
         name:'YiZhuJiaoDui_detail',
         path:'/function/YiZhuJiaoDui/:YiZhuJiaoDui_detail',
-        component:YiZhuJiaoDui_detail
+        component:YiZhuJiaoDui_detail,
+        props:true
     },
     {//重定向
         name:'default',

@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="top">
-                <div v-for="(a,b) in mockData.resultDomain.top" class="topItem" @click="toFun(a.url)">
+                <div v-for="(a,b) in mockData.resultDomain.top" class="topItem" @click="R_fun(a.url)">
                     <em>{{a.url}}</em>
                     <img :src="url+a.icon_white">
                     <span class="name">{{a.name}}</span>
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="often">
-            <div v-for="(a,b) in mockData.resultDomain.often" class="oftenItem">
+            <div v-for="(a,b) in mockData.resultDomain.often" class="oftenItem" @click="R_fun(a.url)">
                 <em>{{a.url}}</em>
                 <img :src="url+a.icon">
                 <span class="name">{{a.name}}</span>
@@ -97,7 +97,7 @@
             bottomNavBlock:bottomNav_block
         },
         methods:{
-            toFun(dest){
+            R_fun(dest){
                 this.$router.push({
                     name:dest
                 })

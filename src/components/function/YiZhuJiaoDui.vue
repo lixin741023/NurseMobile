@@ -1,8 +1,8 @@
 <template>
     <div class="YiZhuJiaoDui">
         <div class="_global_normalHead">
-            <router-link class="fa fa-chevron-left" tag="span" to="/"></router-link>
-            <span>请选择需要校对的患者</span>
+            <span class="fa fa-chevron-left" @click="R_back"></span>
+            <span>请选择患者</span>
         </div>
         <div class="_global_filter">
             <span>筛选</span>
@@ -10,295 +10,31 @@
         </div>
         <div class="HuanZhe_list">
             <ul>
-                <li>
+                <li v-for="(a,b) in HuanZheList" @click="R_YiZhuJiaoDui_detail(a.clinicId)">
                     <div style="width: 3.5rem;">
                         <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
+                            <span class="name">{{a.name}}</span>
+                            <span class="sex">{{a.sex}}</span>
+                            <span class="year">{{a.age}}</span>
+                            <span class="row1_special" :class="{'row1_special_red':whether_row1_special_red(a.conditionId)}">{{a.condition}}</span>
+                            <span class="HuLi">X级护理</span>
                         </div>
                         <div class="row2 row">
                             <span class="title">医嘱：</span>
                             <span class="item">
                                 <span>临时</span>
-                                <span class="value">555</span>
+                                <span class="value">{{a.sNumber}}</span>
                             </span>
                             <span class="item">
                                 <span>长期</span>
-                                <span class="value">12</span>
+                                <span class="value">{{a.lNumber}}</span>
                             </span>
                         </div>
                         <div class="row3 row">
                             <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
-                            </span>
-                        </div>
-                    </div>
-                    <span class="fa fa-chevron-right"></span>
-                </li>
-                <li>
-                    <div style="width: 3.5rem;">
-                        <div class="row1 row">
-                            <span class="name">刘德猛猛</span>
-                            <span class="sex">男</span>
-                            <span class="year">24岁</span>
-                            <span class="row1_special row1_special_red">危重</span>
-                            <span class="HuLi">一级护理</span>
-                        </div>
-                        <div class="row2 row">
-                            <span class="title">医嘱：</span>
-                            <span class="item">
-                                <span>临时</span>
-                                <span class="value">555</span>
-                            </span>
-                            <span class="item">
-                                <span>长期</span>
-                                <span class="value">12</span>
-                            </span>
-                        </div>
-                        <div class="row3 row">
-                            <span class="title">类型：</span>
-                            <span class="item">
-                                <span>药品</span>
-                                <span class="value">223</span>
-                            </span>
-                            <span class="item">
-                                <span>检查</span>
-                                <span class="value">100</span>
-                            </span>
-                            <span class="item">
-                                <span>校验</span>
-                                <span class="value">999</span>
-                            </span>
-                            <span class="item">
-                                <span>诊疗</span>
-                                <span class="value">412</span>
+                            <span v-for="(a,b) in a.advCate" class="item">
+                                <span>{{a.value}}</span>
+                                <span class="value">{{a.number}}</span>
                             </span>
                         </div>
                     </div>
@@ -310,18 +46,48 @@
 </template>
 
 <script>
+    import {url,tip,con} from '../../js/global.js';
     import BScroll from 'better-scroll';
     export default {
         name: "YiZhuJiaoDui",
+        data:()=>({
+           HuanZheList:[]
+        }),
         mounted:function () {
             // new  BScroll('.HuanZhe_list')
         },
         methods:{
+            get_HuanZheList_sync(){
+                $.ajax({
+                    type:'get',
+                    url:url+'/performDoctorAdvice/findAdvInfoByUserId',
+                    async:false,
+                    dataType:'json',
+                    data:{
+                        userId:sessionStorage.getItem('userId')
+                    },
+                    success:(data)=>{
+                        con('患者列表',data);
+                        if(data.error){
+                            tip.failed(data.message,1500);
+                        }else{
+                            this.HuanZheList=data.resultDomains;
+                        }
+                    }
+                })
+            },
+            whether_row1_special_red(a){
+                return !(a === '8c03350ef1cf5933829989b7bc109ea0' || a === 'cc82870c48c750ef873905adc8c38095');
+            },
+            R_YiZhuJiaoDui_detail(id){
+                this.$router.push({name:'YiZhuJiaoDui_detail',params:{YiZhuJiaoDui_detail:id}});
+            },
+            R_back(){
+                this.$router.go(-1);
+            }
         },
         beforeMount:function () {
-            $.ajax({
-
-            })
+            this.get_HuanZheList_sync();
         }
     }
 </script>
@@ -329,6 +95,7 @@
 <style scoped lang="less">
     @import url('../../styles/custom.less');
     .YiZhuJiaoDui{
+        .componentsInit;
         .HuanZhe_list{
             overflow-y: auto;
             height: 5.42rem;
@@ -368,10 +135,12 @@
                         left: 1rem;
                     }
                     .row1_special{
-                        font-size: 0.12rem;
+                        font-size: 0.1rem;
                         left: 1.52rem;
                     }
                     .row1_special_red{
+                        font-size: 0.14rem;
+                        font-weight: bold;
                         color: red;
                     }
                     .HuLi{
@@ -389,7 +158,7 @@
                         width: 0.65rem;
                         margin-right: 0.1rem;
                         .value{
-                            font-weight: bold;
+                            /*font-weight: bold;*/
                             color: red;
                         }
                     }
@@ -401,11 +170,13 @@
                     height: 0.2rem;
                     font-size: 0.14rem;
                     color: #949494;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
                     .item{
-                        width: 0.65rem;
                         margin-right: 0.1rem;
                         .value{
-                            font-weight: bold;
+                            /*font-weight: bold;*/
                             color: red;
                         }
                     }
