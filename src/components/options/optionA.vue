@@ -25,7 +25,7 @@
                         <span>（{{HuanZhe_Info.sex}} {{HuanZhe_Info.age}}）</span>
                         <span>{{HuanZhe_Info.number}}</span>
                     </div>
-                    <img @click="whether_search_HuanZhe=true" src="../../images/index_close.png" >
+                    <img @click="HuanZhe_Info={}" src="../../images/index_close.png" >
                 </div>
             </div>
             <div class="top">
@@ -63,10 +63,8 @@
             HuanZhe_Info:{},
             searchResult:[],
             searchContent:'',
-            whether_search_HuanZhe:true,
-            mockData:{
-                resultDomain:''
-            },
+            // whether_search_HuanZhe:true,
+            mockData:undefined,
             url:url,
         }),
         watch:{
@@ -104,11 +102,20 @@
             },
             makeSure_HuanZhe(a){
                 this.HuanZhe_Info=a;
-                this.whether_search_HuanZhe=false;
+                this.$store.commit('makeSure_HuanZhe',a);
             }
         },
         computed:{
-
+            whether_search_HuanZhe(){
+                let a=JSON.stringify(this.HuanZhe_Info);
+                if(a==="{}"){
+                    console.log('空：展示搜索框');
+                    return true
+                }else{
+                    console.log('非空：展示患者框');
+                    return false
+                }
+            }
         },
         beforeMount:function(){
             $.ajax({
@@ -124,10 +131,14 @@
                     if(data.error){
                         tip.failed(data.message,1500);
                     }else{
+                        console.log(this);
                         this.mockData=data;
                     }
                 }
             });
+            if(this.$store.state.HuanZhe){
+                this.HuanZhe_Info=this.$store.state.HuanZhe;
+            }
         },
         mounted:function(){
 

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {routes} from '../router/routes.js';
 import Vuex from 'vuex';
+import {con} from './js/global';
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
@@ -22,8 +23,15 @@ import app from './app.vue';
 
 const store=new Vuex.Store({
    state:{
-       test:0
-   }
+       HuanZhe:undefined,
+       test:123
+   },
+   mutations:{
+        makeSure_HuanZhe(state,data){
+            state.HuanZhe=data;
+            con('VuexCommit: ',data);
+        }
+    }
 });
 
 

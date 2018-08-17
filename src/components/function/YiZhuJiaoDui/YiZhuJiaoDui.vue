@@ -2,7 +2,7 @@
     <div class="YiZhuJiaoDui">
         <div class="_global_normalHead">
             <span class="fa fa-chevron-left" @click="R_back"></span>
-            <span>请选择患者</span>
+            <span>选择患者</span>
         </div>
         <div class="_global_filter">
             <span>筛选</span>
@@ -10,14 +10,14 @@
         </div>
         <div class="HuanZhe_list">
             <ul>
-                <li v-for="(a,b) in HuanZheList" @click="R_YiZhuJiaoDui_detail(a.clinicId)">
-                    <div style="width: 3.5rem;">
+                <li v-for="(a,b) in HuanZheList" @click="R_YiZhuJiaoDui_detail(a)">
+                    <div class="left">
                         <div class="row1 row">
                             <span class="name">{{a.name}}</span>
                             <span class="sex">{{a.sex}}</span>
                             <span class="year">{{a.age}}</span>
                             <span class="row1_special" :class="{'row1_special_red':whether_row1_special_red(a.conditionId)}">{{a.condition}}</span>
-                            <span class="HuLi">X级护理</span>
+                            <span class="HuLi">三级护理</span>
                         </div>
                         <div class="row2 row">
                             <span class="title">医嘱：</span>
@@ -38,7 +38,7 @@
                             </span>
                         </div>
                     </div>
-                    <span class="fa fa-chevron-right"></span>
+                    <span class="fa fa-chevron-right rightStyle"></span>
                 </li>
             </ul>
         </div>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-    import {url,tip,con} from '../../js/global.js';
+    import {url,tip,con} from '../../../js/global.js';
     import BScroll from 'better-scroll';
     export default {
         name: "YiZhuJiaoDui",
@@ -79,8 +79,8 @@
             whether_row1_special_red(a){
                 return !(a === '8c03350ef1cf5933829989b7bc109ea0' || a === 'cc82870c48c750ef873905adc8c38095');
             },
-            R_YiZhuJiaoDui_detail(id){
-                this.$router.push({name:'YiZhuJiaoDui_detail',params:{YiZhuJiaoDui_detail:id}});
+            R_YiZhuJiaoDui_detail(obj){
+                this.$router.push({name:'YiZhuJiaoDui_detail',params:{YiZhuJiaoDui_detail:obj}});
             },
             R_back(){
                 this.$router.go(-1);
@@ -93,14 +93,12 @@
 </script>
 
 <style scoped lang="less">
-    @import url('../../styles/custom.less');
+    @import url('../../../styles/custom.less');
     .YiZhuJiaoDui{
         .componentsInit;
         .HuanZhe_list{
             overflow-y: auto;
             height: 5.42rem;
-            /*border-top: 2px solid blue;*/
-            /*border-bottom: 2px solid blue;*/
             margin-top: 0.16rem;
             li{
                 display: flex;
@@ -110,6 +108,13 @@
                 padding: 0.11rem;
                 background-color: #fff;
                 border-bottom: 0.01rem solid #F2F2F2;
+                .left{
+                    width: 3.5rem;
+                    overflow-x: hidden;
+                }
+                .rightStyle{
+                    color: #BDBDBD;
+                }
                 &:active{
                     background-color: @activeEvent;
                 }
@@ -135,7 +140,7 @@
                         left: 1rem;
                     }
                     .row1_special{
-                        font-size: 0.1rem;
+                        font-size: 0.12rem;
                         left: 1.52rem;
                     }
                     .row1_special_red{
@@ -144,6 +149,7 @@
                         color: red;
                     }
                     .HuLi{
+                        font-size: 0.12rem;
                         color: #968EFF;
                         left: 2rem;
                     }

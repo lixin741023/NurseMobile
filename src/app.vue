@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <router-view></router-view>
+        <router-view ></router-view>
         <bottomNav v-if="whether_bottomNav"></bottomNav>
     </div>
 </template>
@@ -11,11 +11,14 @@
         data:()=>({
             whether_bottomNav:true
         }),
+        methods:{
+        },
         components:{
             bottomNav
         },
         watch:{
             $route(a,b){
+                console.log('Vuex: ',this.$store.state);
                 let nextRouteName=a.name;
                 switch (nextRouteName) {
                     case 'optionA':this.whether_bottomNav=true;break;
@@ -45,6 +48,5 @@
     @import url('./styles/custom.less');
     .app{
         .appInit;
-        border-top: 1px solid red;
     }
 </style>
