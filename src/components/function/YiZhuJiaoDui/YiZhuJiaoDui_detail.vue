@@ -5,8 +5,6 @@
             <span class="fa fa-chevron-left" @click="R_back"></span>
             <span>校对医嘱</span>
         </div>
-        <div @click="f5">f5</div>
-        <em>{{YiZhuJiaoDui_detail.name}}</em>
         <div class="_global_HuanZheBox">
             <span>{{HuanZhe_YiZhu.bedName}}</span>
             <span>{{HuanZhe_YiZhu.name}}</span>
@@ -126,9 +124,6 @@
             }
         },
         methods:{
-            f5(){
-
-            },
             R_back(){
                 this.$router.go(-1);
             },
@@ -198,8 +193,13 @@
                             tip.failed(data.message,1500);
                         }else{
                             tip.success('校对成功');
-                            this.whether_JiaoDui=true;
-                            //stand by
+                            this.$router.replace({
+                                name:'empty',
+                                params:{
+                                    empty:this.YiZhuJiaoDui_detail,
+                                    backDest:'YiZhuJiaoDui_detail'
+                                }
+                            });
                         }
                     }
                 })
@@ -211,8 +211,8 @@
                     async:false,
                     dataType:'json',
                     data:{
-                        // clinicId:this.YiZhuJiaoDui_detail.clinicId,
-                        clinicId:'e95d5b447ddd4dee89d8e02076619859',
+                        clinicId:this.YiZhuJiaoDui_detail.clinicId,
+                        // clinicId:'e95d5b447ddd4dee89d8e02076619859',
                         /* date:不传默认当天*/
                         doctorAdviceEffective:undefined,/*医嘱效期 0.长期有效 1.临时有效   不传查全部*/
                         type:1 /*类型(0:全部;1:未校对;2已校对)*/,
@@ -239,8 +239,7 @@
             this.query_YiZhuList();
         },
         mounted:function () {
-
-        }
+        },
     }
 </script>
 

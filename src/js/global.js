@@ -41,4 +41,5 @@ function con(text,data) {
     console.log(text,data);
     console.log('')
 }
+
 export {url,tip,con}

@@ -6,20 +6,15 @@ import {con} from './js/global';
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
-/*styles*/
-// import 'frozenui/css/frozen.css';
 import 'mint-ui/lib/style.min.css';
 import './styles/global.less';
 
-/*script*/
 import 'jquery';//expose
 import 'better-scroll';//expose
 import './plugins/indigo.js';
 
-/*components*/
 import app from './app.vue';
 
-/*testUnit*/
 
 const store=new Vuex.Store({
    state:{
@@ -38,10 +33,15 @@ const store=new Vuex.Store({
 const router=new VueRouter({
     routes
 });
-/*Entry*/
-new Vue({
+
+const vueCase=new Vue({
     render:(core)=>core(app),
     router,
     store
 }).$mount('#app');
 
+// setInterval(()=>{
+//    con('AAA',store.state.HuanZhe)
+// },1000);
+
+export {vueCase};

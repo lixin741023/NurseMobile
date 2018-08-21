@@ -25,7 +25,7 @@
                         <span>（{{HuanZhe_Info.sex}} {{HuanZhe_Info.age}}）</span>
                         <span>{{HuanZhe_Info.number}}</span>
                     </div>
-                    <img @click="HuanZhe_Info={}" src="../../images/index_close.png" >
+                    <img @click="cancel_HuanZhe" src="../../images/index_close.png" >
                 </div>
             </div>
             <div class="top">
@@ -63,7 +63,6 @@
             HuanZhe_Info:{},
             searchResult:[],
             searchContent:'',
-            // whether_search_HuanZhe:true,
             mockData:undefined,
             url:url,
         }),
@@ -101,8 +100,12 @@
                 })
             },
             makeSure_HuanZhe(a){
-                this.HuanZhe_Info=a;
                 this.$store.commit('makeSure_HuanZhe',a);
+                this.HuanZhe_Info=this.$store.state.HuanZhe;
+            },
+            cancel_HuanZhe(){
+                this.$store.commit('makeSure_HuanZhe',undefined);
+                this.HuanZhe_Info={};
             }
         },
         computed:{

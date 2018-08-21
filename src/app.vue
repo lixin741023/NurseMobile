@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <router-view ></router-view>
+        <router-view></router-view>
         <bottomNav v-if="whether_bottomNav"></bottomNav>
     </div>
 </template>
@@ -40,6 +40,9 @@
                 case 'optionE':this.whether_bottomNav=true;break;
                 default:this.whether_bottomNav=false;break;
             }
+        },
+        computed:{
+
         }
     }
 </script>

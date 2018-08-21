@@ -5,7 +5,7 @@
                 {{a.name}}
             </span>
         </div>
-        <mt-tab-container class="navBox" v-model="active" style="border: 1px solid red" :swipeable="true"><!-- :swipeable="true"-->
+        <mt-tab-container class="navBox" v-model="active" :swipeable="true"><!-- :swipeable="true"-->
             <mt-tab-container-item v-for="(a,b) in mockData" :id="a.id" :key="a.id">
                 <div class="navContainer">
                     <div v-for="(a,b) in a.children" class="navContainer_item" @touchstart="gtouchstart(popupVisibleControl,a.id)" @touchmove="gtouchmove()" @touchend="gtouchend(R_fun,a.url)" >
@@ -195,7 +195,7 @@
         .componentsInit;
         .navTitle{
             box-sizing: border-box;
-            border-bottom: 0.015rem solid #F4F4F4;
+            border-bottom: 0.015rem solid #E4E4E4;
             padding: 0 0.1rem;
             font-size: 0.15rem;
             white-space: nowrap;
@@ -212,8 +212,12 @@
             }
         }
         .navBox{
+            /*border: 1px solid red;*/
             box-sizing: border-box;
             padding: 0.1rem 0.1rem 0 0.1rem;
+            overflow-y: auto;
+            height: 5.2rem;
+
         }
         .navContainer{
             display: flex;

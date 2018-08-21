@@ -28,13 +28,14 @@ let routesTest=[
     },
     {
         name:'test5',
-        path:'/test5',
+        path:'/test5/',
         component:test5
     },
     {
         name:'test6',
-        path:'/test6',
-        component:test6
+        path:'/test6/:x',
+        component:test6,
+        props:true
     }
 ];
 

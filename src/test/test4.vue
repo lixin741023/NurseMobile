@@ -23,6 +23,7 @@
        </ul>
     </div>
 
+        <button @click="R_test">a</button>
     </div>
 </template>
 
@@ -31,12 +32,20 @@
     export default {
         name: "test4",
         methods:{
+            R_test(){
+              this.$router.push({
+                  name:'test3'
+              })
+            },
             test(dest){
                 console.log(this.$router)
             }
         },
         mounted:function () {
             new BS('.q')
+        },
+        beforeRouteLeave(a,b,next){
+            next({name:'test1'})
         }
     }
 </script>

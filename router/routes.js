@@ -1,3 +1,4 @@
+import {vueCase} from "../src/main";
 import {routesTest} from './routesTest.js';
 import empty from '../src/components/nav/empty.vue';
 import login from '../src/components/login.vue';
@@ -14,8 +15,9 @@ import SanCeDanLurRu_detail from '../src/components/function/SanCeDanLuRu/SanCeD
 let routes=[
     {
         name:'empty',
-        path:'/empty',
-        component:empty
+        path:'/empty/:empty/:backDest',
+        component:empty,
+        props:true
     },
     {
         name:'login',
@@ -50,7 +52,16 @@ let routes=[
     {
         name:'YiZhuJiaoDui',
         path:'/function/YiZhuJiaoDui',
-        component:YiZhuJiaoDui
+        component:YiZhuJiaoDui,
+        beforeEnter:(a,b,c)=>{
+            if(vueCase.$store.state.HuanZhe){
+                c({name:'YiZhuJiaoDui_detail',params:{
+                        YiZhuJiaoDui_detail:vueCase.$store.state.HuanZhe
+                    }})
+            }else{
+                c()
+            }
+        }
     },
     {
         name:'YiZhuJiaoDui_detail',

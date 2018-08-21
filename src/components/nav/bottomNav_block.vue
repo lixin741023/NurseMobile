@@ -1,5 +1,5 @@
 <template>
-    <div class="bottomNav_block" style="opacity: 0.2;">
+    <div class="bottomNav_block" style="opacity: 0;">
         <div class="item">
             <img src="../../images/optionA_check.png" alt="首页">
             <span class="activeSpan">XX</span>

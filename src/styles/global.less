@@ -1,3 +1,4 @@
+@import url('./custom.less');
 html{
 }
 body{
@@ -16,6 +17,21 @@ input{
   font-size: 0.12rem;
   letter-spacing: 1.3px;
   box-sizing: border-box;
+  color: #212529;
+}
+textarea{
+  font-size: 0.12rem;
+  letter-spacing: 1.3px;
+  resize: none;
+  outline: none;
+  padding: 0.05rem;
+  box-sizing: border-box;
+  line-height: 1.4;
+  color: #212529;
+}
+select{
+  outline: none;
+  color: #212529;
 }
 .mint-toast{
   z-index: 9999;
@@ -69,4 +85,25 @@ ul{
   font-size: 0.13rem;
   border-bottom: 0.01rem solid #E4E4E4;
   overflow: hidden;
+}
+._global_timeFilter{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  height: 0.4rem;
+  font-size: 0.14rem;
+  border-bottom: 0.01rem solid #E4E4E4;
+  overflow: hidden;
+  span{
+    margin-right: 0.1rem;
+  }
+  img{
+    width: 0.25rem;
+    height: 0.25rem;
+  }
+  &:active{
+    background-color: @activeEvent;
+  }
+  //stand by:whether setting auto adaption for mint-ui's Datetime Picker?
 }
