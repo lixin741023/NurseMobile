@@ -25,6 +25,7 @@
         name: "login",
         data:()=>({
             url:'http://7.0.0.116:8084/StarTrekMED',
+            // url:'http://7.0.0.114:8083/StarTrekMED',
             user:1733,
             pas:123456
         }),

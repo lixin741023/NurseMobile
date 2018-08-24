@@ -6,6 +6,7 @@
 </template>
 
 <script>
+    import {con} from "./js/global";
     import bottomNav from './components/nav/bottomNav.vue';
     export default {
         data:()=>({
@@ -18,7 +19,7 @@
         },
         watch:{
             $route(a,b){
-                console.log('Vuex: ',this.$store.state);
+                con('当前Vuex值',this.$store.state);
                 let nextRouteName=a.name;
                 switch (nextRouteName) {
                     case 'optionA':this.whether_bottomNav=true;break;

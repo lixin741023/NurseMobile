@@ -125,6 +125,7 @@
                 return false;
             },
             R_fun(url){
+                event.preventDefault();
                 this.$router.push({name:url});
             }
         },
@@ -261,7 +262,7 @@
                     font-size: 0.14rem;
                 }
                 em{
-                    /*display: none;*/
+                    display: none;
                     position: absolute;
                     top: 10px;
                 }

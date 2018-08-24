@@ -15,7 +15,6 @@ import './plugins/indigo.js';
 
 import app from './app.vue';
 
-
 const store=new Vuex.Store({
    state:{
        HuanZhe:undefined,
@@ -28,7 +27,6 @@ const store=new Vuex.Store({
         }
     }
 });
-
 
 const router=new VueRouter({
     routes

@@ -32,7 +32,7 @@
                 <div v-for="(a,b) in mockData.resultDomain.top" class="topItem" @click="R_fun(a.url)">
                     <em>{{a.url}}</em>
                     <img :src="url+a.icon_white">
-                    <span class="name">{{a.name}}</span>
+                    <span class="name">{{a.name|tooWidth}}</span>
                 </div>
             </div>
         </div>
@@ -49,7 +49,6 @@
             </router-link>
         </div>
         <bottomNavBlock></bottomNavBlock>
-        <input type="text" v-model="searchResult">
     </div>
 </template>
 
@@ -117,6 +116,15 @@
                 }else{
                     console.log('非空：展示患者框');
                     return false
+                }
+            }
+        },
+        filters:{
+            tooWidth(data){
+                if(data.length>=6){
+                    return data.substring(0,data.length-2)+'..'
+                }else{
+                    return data
                 }
             }
         },
@@ -308,7 +316,7 @@
             .oftenItem{
                 margin-left: 0.11rem;
                 box-sizing: border-box;
-                padding-top: 0.18rem;
+                padding-top: 0.07rem;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -329,7 +337,7 @@
                     font-size: 0.14rem;
                 }
                 em{
-                    /*display: none;*/
+                    display: none;
                     position: absolute;
                     top: 10px;
                 }
