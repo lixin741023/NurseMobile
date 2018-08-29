@@ -325,6 +325,7 @@
                 width: 1.1rem;
                 height: 1.1rem;
                 border: 1px solid #CDCDCD;
+                border: 1px solid transparent;
                 margin-bottom: 0.1rem;
                 &:active{
                     background-color: @activeEvent;

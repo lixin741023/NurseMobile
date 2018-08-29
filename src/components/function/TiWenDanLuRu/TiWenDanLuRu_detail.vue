@@ -422,7 +422,7 @@
                     userId:sessionStorage.getItem('userId'),
                 },
                 success:function (data) {
-                    con('获取到的当天时间',data);
+                    con('获取的当天时间',data);
                     if(data.error){
                         tip.failed(data.message,1500);
                     }else{

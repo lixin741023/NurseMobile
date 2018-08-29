@@ -1,5 +1,7 @@
-const url='http://7.0.0.116:8084/StarTrekMED';//龚帅
+// const url='http://7.0.0.116:8084/StarTrekMED';//龚帅
 // const url='http://7.0.0.114:8083/StarTrekMED';//李吉平
+const url='http://7.0.0.111:8084/StarTrekMED';//杨晓
+
 /************************
  * whether_row1_special_red(a){
                 return !(a === '8c03350ef1cf5933829989b7bc109ea0' || a === 'cc82870c48c750ef873905adc8c38095');

@@ -103,6 +103,7 @@
 <style scoped lang="less">
     @import url('../../../styles/custom.less');
     .TiWenDanLuRu{
+        .componentsInit;
         .red{
             font-size: 0.14rem;
             font-weight: bold;

@@ -90,7 +90,7 @@
                         success:(data)=>{
                             con('医嘱费用项目',data);
                             if(data.error){
-                                tip.failed(data.message,1500)
+                                tip.failed(data.message,1500);
                             }else{
                                 for(let i=0; i<data.rows.length; i++){
                                     this.YiZhu_items.push(data.rows[i]);
