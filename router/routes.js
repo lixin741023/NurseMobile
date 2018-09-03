@@ -9,6 +9,7 @@ import optionD from '../src/components/options/optionD.vue';
 import optionE from '../src/components/options/optionE.vue';
 import YiZhuJiaoDui from '../src/components/function/YiZhuJiaoDui/YiZhuJiaoDui.vue';
 import YiZhuJiaoDui_detail from '../src/components/function/YiZhuJiaoDui/YiZhuJiaoDui_detail.vue';
+import YiZhuZhiXing from '../src/components/function/YiZhuZhiXing/YiZhuZhiXing.vue';
 import TiWenDanLuRu from '../src/components/function/TiWenDanLuRu/TiWenDanLuRu.vue';
 import TiWenDanLuRu_detail from '../src/components/function/TiWenDanLuRu/TiWenDanLuRu_detail.vue';
 import TiWenDanChaKan from '../src/components/function/TiWenDanChaKan/TiWenDanChaKan.vue';
@@ -19,6 +20,10 @@ import JiaoBanChaXun from '../src/components/function/JiaoBanChaXun/JiaoBanChaXu
 import BingQuJiaoBan from '../src/components/function/BingQuJiaoBan/BingQuJiaoBan.vue';
 import HuLiDanChaKan from '../src/components/function/HuLiDanChaKan/HuLiDanChaKan.vue';
 import HuLiDanChaKan_detail from '../src/components/function/HuLiDanChaKan/HuLiDanChaKan_detail.vue';
+import HuLiDanLuRu from '../src/components/function/HuLiDanLuRu/HuLiDanLuRu.vue';
+import HuLiDanLuRu_detail from '../src/components/function/HuLiDanLuRu/HuLiDanLuRu_detail.vue';
+import DianZiBingLiChaKan from '../src/components/function/DianZiBingLiChaKan/DianZiBingLiChaKan.vue';
+import DianZiBingLiChaKan_detail from '../src/components/function/DianZiBingLiChaKan/DianZiBingLiChaKan_detail.vue';
 
 let routes=[
     {
@@ -76,6 +81,11 @@ let routes=[
         path:'/function/YiZhuJiaoDui/:YiZhuJiaoDui_detail',
         component:YiZhuJiaoDui_detail,
         props:true
+    },
+    {
+      name:'YiZhuZhiXing',
+      path:'/function/YiZhuZhiXing',
+      component:YiZhuZhiXing
     },
     {
         name:'TiWenDanLuRu',
@@ -176,6 +186,52 @@ let routes=[
         name:'HuLiDanChaKan_detail',
         path:'/function/HuLiDanChaKan/:HuLiDanChaKan_detail',
         component:HuLiDanChaKan_detail,
+        props:true
+    },
+    {
+        name:'HuLiDanLuRu',
+        path:'/function/HuLiDanLuRu',
+        component:HuLiDanLuRu,
+        beforeEnter:(a,b,c)=>{
+            if(vueCase.$store.state.HuanZhe){
+                c({
+                    name:'HuLiDanLuRu_detail',
+                    params:{
+                        HuLiDanLuRu_detail:vueCase.$store.state.HuanZhe
+                    }
+                })
+            }else{
+                c();
+            }
+        }
+    },
+    {
+        name:'HuLiDanLuRu_detail',
+        path:'/function/HuLiDanLuRu/:HuLiDanLuRu_detail',
+        component:HuLiDanLuRu_detail,
+        props:true
+    },
+    {
+        name:'DianZiBingLiChaKan',
+        path:'/function/DianZiBingLiChaKan',
+        component:DianZiBingLiChaKan,
+        beforeEnter:(a,b,c)=>{
+            if(vueCase.$store.state.HuanZhe){
+                c({
+                    name:'DianZiBingLiChaKan_detail',
+                    params:{
+                        DianZiBingLiChaKan_detail:vueCase.$store.state.HuanZhe
+                    }
+                })
+            }else{
+                c();
+            }
+        }
+    },
+    {
+        name:'DianZiBingLiChaKan_detail',
+        path:'/function/DianZiBingLiChaKan/:DianZiBingLiChaKan_detail',
+        component:DianZiBingLiChaKan_detail,
         props:true
     },
     {//重定向

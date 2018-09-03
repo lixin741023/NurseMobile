@@ -5,6 +5,10 @@
         <button @click="a">+</button>
         <button @click="b">-</button>
         <p>{{x()}}</p>
+        <hr>
+        <div class="aaa" v-html="h">
+
+        </div>
     </div>
 </template>
 
@@ -14,8 +18,9 @@
         data:()=>({
             arr:{
                 a:[1,2,3,4,5,6,7,8,9],
-                b:['a','b','c','d','e','f']
-            }
+                b:['a','b','c','d','e','f'],
+            },
+            h:'<h1>123</h1>'
         }),
         methods:{
             a(){

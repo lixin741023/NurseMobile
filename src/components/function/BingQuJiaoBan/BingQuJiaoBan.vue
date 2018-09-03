@@ -321,6 +321,7 @@
 <style scoped lang="less">
     @import url('../../../styles/custom.less');
     .BingQuJiaoBan{
+        .componentsInit;
         .nurseInfo{
             display: flex;
             justify-content: space-between;

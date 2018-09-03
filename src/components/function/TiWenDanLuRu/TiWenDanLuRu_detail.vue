@@ -5,7 +5,7 @@
             <span>三测单录入</span>
         </div>
         <div class="_global_HuanZheBox">
-            <span>{{HuanZhe_Info.bed}}床</span>
+            <span>{{HuanZhe_Info.bed}}</span>
             <span>{{HuanZhe_Info.patientName}}</span>
             <span>（{{HuanZhe_Info.patientSex}} {{HuanZhe_Info.patientAge}}）</span>
             <span>{{HuanZhe_Info.clinicNumber}}</span>

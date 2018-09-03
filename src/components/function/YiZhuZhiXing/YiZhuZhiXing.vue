@@ -1,6 +1,6 @@
 <template>
     <div class="YiZhuZhiXing">
-
+        11
     </div>
 </template>
 
@@ -10,6 +10,9 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+    @import url('../../../styles/custom.less');
+    .YiZhuZhiXing{
+        .componentsInit;
+    }
 </style>

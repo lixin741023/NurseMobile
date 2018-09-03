@@ -7,6 +7,7 @@ import test6 from '../src/test/test6.vue';
 import test7 from '../src/test/test7.vue';
 import test8 from '../src/test/test8.vue';
 import test9 from '../src/test/test9.vue';
+import test11 from '../src/test/test11.vue';
 
 let routesTest=[
     {
@@ -54,6 +55,11 @@ let routesTest=[
         name:'test9',
         path:'/test9',
         component:test9
+    },
+    {
+        name:'test11',
+        path:'/test11',
+        component:test11
     }
 ];
 

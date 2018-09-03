@@ -24,25 +24,31 @@
         </mt-datetime-picker>
 
         <div class="tabTitle">
-            <span>通用模板</span>
-            <span>通用模板测试1</span>
-            <span>通用模板测试2</span>
-            <span>通用模板测试3</span>
-            <span>通用模板测试4</span>
+            <span v-for="(a,b) in allData" :class="{'checkSpan':activeTab===a.tId}" @click="activeTab=a.tId">{{a.tName}}</span>
         </div>
-        <div class="tabContainer">
-            <mt-tab-container v-model="activeTab">
-                <mt-tab-container-item id="tab-container1">
-
-                </mt-tab-container-item>
-                <mt-tab-container-item id="tab-container2">
-
-                </mt-tab-container-item>
-                <mt-tab-container-item id="tab-container3">
-
-                </mt-tab-container-item>
-            </mt-tab-container>
-        </div>
+        <mt-tab-container v-model="activeTab" class="tabContainer">
+            <mt-tab-container-item v-for="(a,index_a) in allData" :id="a.tId" :key="a.tId">
+                <div v-for="(b,index_b) in a.term" class="tableBox">
+                    <table border="1">
+                        <thead>
+                        <tr>
+                            <td v-for="(c,index_c) in b.subitem.temStructure">{{c.name}}</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(d,index_d) in b.subitem.data">
+                            <td v-for="(e,index_e) in b.subitem.temStructure">
+                                <span v-if="e.type==='select'">{{formatter_tdSelect(d.content[e.id],e.select)}}</span>
+                                <span v-else>{{d.content[e.id]}}</span>
+                                <!--{{e.type}}-->
+                                <!--{{d.content[e.id]}}-->
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </mt-tab-container-item>
+        </mt-tab-container>
 
     </div>
 </template>
@@ -65,6 +71,7 @@
             toDay:'',
             chooseDay:'',
             activeTab:undefined,
+            allData:undefined,
         }),
         watch:{
             chooseDay(date){
@@ -75,12 +82,36 @@
                     dataType:'json',
                     data:{
                         clinicId:this.HuLiDanChaKan_detail.clinicId,
-
+                        startTime:`${this.chooseDay} 00:00:00`,
+                        endTime:`${this.chooseDay} 23:59:59`,
+                        // startTime:`2018-08-27 0:0:0`,
+                        // endTime:`2018-08-27 23:59:59`,
+                    },
+                    success:(data)=>{
+                        con('护理单信息',data);
+                        if(data.error){
+                            tip.failed(data.message,1500);
+                        }else{
+                            if(data.resultDomains.length===0){
+                                tip.failed('未查询到患者护理单',1500);
+                                this.allData=undefined;
+                                return;
+                            }
+                            this.allData=data.resultDomains;
+                            this.activeTab=data.resultDomains[0].tId;
+                        }
                     }
                 })
             }
         },
         methods:{
+            formatter_tdSelect(a,list){
+                for(let i=0; i<list.length; i++){
+                    if(a===list[i].id){
+                        return list[i].name
+                    }
+                }
+            },
             R_back(){
                 this.$router.go(-1);
             },
@@ -112,7 +143,7 @@
                         }
                     }
                 })
-            }
+            },
         },
         beforeMount:function () {
             $.ajax({
@@ -140,7 +171,9 @@
 </script>
 
 <style scoped lang="less">
+    @import url('../../../styles/custom.less');
     .HuLiDanChaKan_detail{
+        .componentsInit;
         .tabTitle{
             width: 100%;
             box-sizing: border-box;
@@ -150,16 +183,59 @@
             font-size: 0.13rem;
             margin-top: 0.2rem;
             background-color: #fff;
-            border-bottom: 0.01rem solid #E4E4E4;
+            border-bottom: 0.02rem solid #E4E4E4;
+            span:last-child{
+                margin-right: 0;
+            }
             span{
-                margin-right: 0.2rem;
+                margin-right: 0.23rem;
                 display: inline-block;
-                padding: 0 0.02rem 0.09rem 0.02rem;
+                padding: 0 0.04rem 0.09rem 0.04rem;
                 border-bottom: 0.03rem solid transparent;
             }
             .checkSpan{
                 color: #27B6F5;
                 border-bottom: 0.03rem solid #27B6F5;
+            }
+        }
+        .tabContainer{
+            /*border-top: 0.01rem solid #E4E4E4;*/
+            height: 4rem;
+            overflow-y: auto;
+            /*border-bottom: 1px solid red;*/
+            padding-bottom: 10px;
+            /*margin-top: 0.1rem;*/
+            .tableBox:nth-child(1){
+                margin-top: 0;
+                border-top: 0;
+            }
+            .tableBox{
+                margin-top: 0.25rem;
+                border-top: 1px solid #E4E4E4;
+                border-bottom: 1px solid #E4E4E4;
+                background-color: #fff;
+                overflow-x: auto;
+                /*max-height: 1.8rem;*/
+            }
+            table{
+                font-size: 0.13rem;
+                border-collapse: collapse;
+                border-color: #E4E4E4;
+                border-top: none;
+                border-right: none;
+                border-bottom: none;
+                border-left: none;
+                tbody{
+                    td{
+                        font-size: 0.12rem;
+                    }
+                }
+                tr{
+                    td{
+                        padding: 0.05rem 0.08rem;
+                        white-space: nowrap;
+                    }
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ import 'jquery';//expose
 import 'better-scroll';//expose
 import './plugins/indigo.js';
 
+
 import app from './app.vue';
 
 const store=new Vuex.Store({

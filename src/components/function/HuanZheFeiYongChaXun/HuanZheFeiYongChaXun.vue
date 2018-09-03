@@ -104,6 +104,7 @@
 <style scoped lang="less">
     @import url('../../../styles/custom.less');
     .HuanZheFeiYongChaXun{
+        .componentsInit;
         .red{
             font-size: 0.14rem;
             font-weight: bold;

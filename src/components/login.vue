@@ -36,6 +36,8 @@
             },
             login:function () {
                 let this_=this;
+                this_.$router.push({name:'optionA'});
+                return;
                 $.ajax({
                     type:'post',
                     url:this.url+'/user/checkLogin',
@@ -67,7 +69,6 @@
     .login{
         .componentsInit;
         display: flex;
-        height: 6.7rem;
         flex-direction: column;
         align-items: center;
         background-color: #617fde;

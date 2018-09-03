@@ -159,7 +159,9 @@
 </script>
 
 <style scoped lang="less">
+    @import url('../../../styles/custom.less');
     .HuanZheFeiYongChaXun_detail{
+        .componentsInit;
         .filter{
             color: #ccc;
             display: flex;

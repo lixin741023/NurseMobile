@@ -1,5 +1,6 @@
 @import url('./custom.less');
 html{
+  height: 100%;
 }
 body{
   font-size: 0.12rem;
@@ -7,6 +8,7 @@ body{
   margin: 0;
   background-color: #F7F7F7;
   color: #212529;
+  //color: #888888;
 }
 p{
   margin: 0;
@@ -108,4 +110,55 @@ ul{
     background-color: @activeEvent;
   }
   //stand by:whether setting auto adaption for mint-ui's Datetime Picker?
+}
+.fzf_CSS{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img{
+    width: 99%;
+  }
+}
+
+
+.fade-enter-to,.fade-leave-to{
+  transition: 0.5S;
+}
+.fade-enter{
+  opacity: 0;
+}
+.fade-enter-to{
+  opacity: 1;
+}
+.fade-leave-to{
+  opacity: 0;
+}
+
+.towards_left-enter-to,.towards_left-leave-to{
+  transition: 0.5S;
+}
+.towards_left-enter{
+  left: 100%;
+}
+.towards_left-enter-to{
+  left: 0;
+}
+.towards_left-leave-to{
+  opacity: 0.8;
+}
+
+.towards_right-enter-to,.towards_right-leave-to{
+  transition: 0.5S;
+}
+.towards_right-enter{
+  opacity: 0;
+}
+.towards_right-enter-to{
+  opacity: 1;
+}
+.towards_right-leave{
+  left: 0;
+}
+.towards_right-leave-to{
+  left: 100%;
 }
