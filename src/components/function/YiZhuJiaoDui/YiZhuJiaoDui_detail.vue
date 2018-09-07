@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import {con,url,tip} from '../../../js/global.js';
+    import {con,tip} from '../../../js/global.js';
     import { Checklist } from 'mint-ui';
     import Vue from 'vue';
     Vue.component(Checklist.name, Checklist);
@@ -69,7 +69,8 @@
                 }
             ],
             check_YiZhuList:[],
-            YiZhu_items:[]
+            YiZhu_items:[],
+            url:''
         }),
         watch:{
             check_YiZhuList(clickAfter,clickBefor){
@@ -80,7 +81,7 @@
                     YiZhuId.push(clickAfter[clickAfter.length-1]);
                     $.ajax({
                         type:'get',
-                        url:url+'/performDoctorAdvice/queryProofreadingCost',
+                        url:this.url+'/performDoctorAdvice/queryProofreadingCost',
                         async:false,
                         dataType: 'json',
                         data:{
@@ -182,7 +183,7 @@
                 }
                 $.ajax({
                     type:'post',
-                    url:url+'/performDoctorAdvice/proofreadDoctorAdviceByIds',
+                    url:this.url+'/performDoctorAdvice/proofreadDoctorAdviceByIds',
                     async:false,
                     dataType:'json',
                     contentType:'application/json',
@@ -207,7 +208,7 @@
             query_YiZhuList(){
                 $.ajax({
                     type:'get',
-                    url:url+'/performDoctorAdvice/queryDoctorAdviceByClinicIdMed',
+                    url:this.url+'/performDoctorAdvice/queryDoctorAdviceByClinicIdMed',
                     async:false,
                     dataType:'json',
                     data:{
@@ -235,6 +236,10 @@
                 })
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             this.query_YiZhuList();
         },
@@ -258,7 +263,7 @@
             border-top: 1px solid #E4E4E4;
             border-bottom: 1px solid #E4E4E4;
             margin-top: 0.2rem;
-            height: 2.3rem;
+            height: 2.4rem;
             overflow-y: auto;
             background-color: #fff;
             li{

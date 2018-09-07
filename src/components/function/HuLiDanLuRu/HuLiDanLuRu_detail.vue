@@ -70,11 +70,12 @@
 
 <script>
     import Vue from 'vue';
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name: "HuLiDanLuRu_detail",
         props:['HuLiDanLuRu_detail'],
         data:()=>({
+            url:'',
             HuanZhe_Info:{},
             inHospital_time:undefined,
             dateValue:undefined,
@@ -95,7 +96,7 @@
             currentTemplateId(){
                 $.ajax({
                     type:'get',
-                    url:url+'/threetest/findContentById',
+                    url:this.url+'/threetest/findContentById',
                     async:false,
                     dataType:'json',
                     data:{
@@ -157,7 +158,7 @@
             get_toDay(){
                 $.ajax({
                     type:'get',
-                    url:url+'/dateUtil/getDateMapInfo',
+                    url:this.url+'/dateUtil/getDateMapInfo',
                     async:false,
                     dataType:'json',
                     data:{
@@ -180,7 +181,7 @@
             get_tabOption(){
                 $.ajax({
                     type:'get',
-                    url:url+'/threetest/queryAllNurByClinicId',
+                    url:this.url+'/threetest/queryAllNurByClinicId',
                     async:false,
                     dataType:'json',
                     data:{
@@ -223,7 +224,7 @@
 
                 $.ajax({
                     type:'post',
-                    url:url+'/threetest/saveOrUpdateContentMed',
+                    url:this.url+'/threetest/saveOrUpdateContentMed',
                     async:false,
                     dataType:'json',
                     // traditional:true,
@@ -252,10 +253,14 @@
                 });
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function (){
             $.ajax({
                 type:'get',
-                url:url+'/user/queryByclinicIdMed',
+                url:this.url+'/user/queryByclinicIdMed',
                 async:false,
                 dataType:'json',
                 data:{

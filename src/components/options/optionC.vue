@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import {url,con,tip} from '../../js/global.js';
+    import {con,tip,platform_YiHu} from '../../js/global.js';
     import Vue from 'vue';
     import { TabContainer, TabContainerItem } from 'mint-ui';
     Vue.component(TabContainer.name, TabContainer);
@@ -54,7 +54,7 @@
                 often:[]
             },
             popupVisible:false,
-            url:url,
+            url:'',
             mockData:undefined,
             active:'tab-container1'
         }),
@@ -129,14 +129,19 @@
                 this.$router.push({name:url});
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             $.ajax({
                 type:'post',
-                url:url+'/operatorAddress/queryUserOpeToAdd',
+                url:this.url+'/operatorAddress/queryUserOpeToAdd',
                 async:false,
                 dataType:"json",
                 data:{
-                    userId:sessionStorage.getItem('userId')
+                    userId:sessionStorage.getItem('userId'),
+                    platformId:platform_YiHu
                 },
                 success:(data)=>{
                     con('菜单权限',data);
@@ -166,13 +171,14 @@
             }else{
                 $.ajax({
                     type:'post',
-                    url:url+'/operatorAddress/saveAndUpdateMed',
+                    url:this.url+'/operatorAddress/saveAndUpdateMed',
                     async: false,
                     dataType:'json',
                     data:{
                         'id':this.whether,
                         'userId.id':sessionStorage.getItem('userId'),
-                        'content':JSON.stringify(this.settingArray)
+                        'content':JSON.stringify(this.settingArray),
+                        'platformId.id':platform_YiHu
                     },
                     success:function (data) {
                         con('配置上传返回',data);

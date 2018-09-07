@@ -26,6 +26,7 @@
             <div class="yList">
                 <div class="row1">
                     <div class="cell1">
+                        <span class="fa fa-chevron-left" @click="small_back()"></span>
                         <span class="key">书写人：</span>月天泽泽
                     </div>
                     <div class="cell2">
@@ -36,8 +37,9 @@
                     </div>
                 </div>
                 <div class="row2" v-html="html">
-
-
+                    <!--<img src="../../../images/ShenHe_no.png" alt="">-->
+                    <!--<img src="../../../images/ShenHe_ing.png" alt="">-->
+                    <!--<img src="../../../images/ShenHe_ed.png" alt="">-->
                 </div>
             </div>
         </div>
@@ -76,7 +78,23 @@
             }
         },
         methods:{
+            small_back(){
+                let xList=$('.DianZiBingLiChaKan_detail .xList');
+                let yList=$('.DianZiBingLiChaKan_detail .yList');
+                yList.animate({
+                    left:'100%',
+                    opacity:'0',
+                },500,()=>{
+                    yList.css('display','none');
+                });
+                xList.css('display','block');
+                xList.animate({
+                    left:'0',
+                    opacity:'1',
+                },750);
+            },
             get_normal(id){
+                let content='';
                 $.ajax({
                     type:'get',
                     url:url+'/emr/queryEmrDetailByEmrId',
@@ -91,12 +109,14 @@
                         if(data.error){
                             tip.failed(data.message,1500);
                         }else{
-                            this.html=data.resultDomain.content.source;
+                            content=data.resultDomain.content.source;
+                            this.html=content;
                         }
                     }
                 })
             },
             get_XuXie(id){
+                let content='';
                 $.ajax({
                     type:'get',
                     url:url+'/emr/queryWrittenEmr',
@@ -112,7 +132,10 @@
                         if(data.error){
                             tip.failed(data.message,1500);
                         }else{
-
+                            for(let i=0; i<data.resultDomains.length; i++){
+                                content+=data.resultDomains[i].content.source;
+                            }
+                            this.html=content;
                         }
                     }
                 })
@@ -186,9 +209,7 @@
                 yList.animate({
                     left:'0',
                     opacity:'1',
-                },1000,()=>{
-
-                });
+                },500);
 
             }
         },
@@ -265,6 +286,7 @@
                 left: 100%;
                 opacity: 0;
                 position: absolute;
+                overflow-x: hidden;
                 width: 100%;
                 .row1{
                     display: flex;
@@ -279,6 +301,9 @@
                     }
                     .cell1{
                         width: 1.4rem;
+                        .fa{
+                            color: #65717e;
+                        }
                     }
                     .cell2{
                         width: 2rem;
@@ -289,10 +314,22 @@
                     }
                 }
                 .row2{
+                    width: 100%;
+                    position: relative;
+                    overflow-x: auto;
                     margin-top: 0.1rem;
                     background-color: #fff;
                     padding: 10px;
                 }
+            }
+        }
+    }
+</style>
+<style lang="less">
+    .DianZiBingLiChaKan_detail{
+        .row2{
+            p{
+                white-space: nowrap!important;
             }
         }
     }

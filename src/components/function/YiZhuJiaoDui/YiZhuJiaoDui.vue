@@ -46,12 +46,13 @@
 </template>
 
 <script>
-    import {url,tip,con} from '../../../js/global.js';
+    import {tip,con} from '../../../js/global.js';
     import BScroll from 'better-scroll';
     export default {
         name: "YiZhuJiaoDui",
         data:()=>({
-           HuanZheList:[]
+           HuanZheList:[],
+           url:''
         }),
         mounted:function () {
             // new  BScroll('.HuanZhe_list')
@@ -60,7 +61,7 @@
             get_HuanZheList_sync(){
                 $.ajax({
                     type:'get',
-                    url:url+'/performDoctorAdvice/findAdvInfoByUserId',
+                    url:this.url+'/performDoctorAdvice/findAdvInfoByUserId',
                     async:false,
                     dataType:'json',
                     data:{
@@ -86,6 +87,10 @@
                 this.$router.go(-1);
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             this.get_HuanZheList_sync();
         }
@@ -97,9 +102,12 @@
     .YiZhuJiaoDui{
         .componentsInit;
         .HuanZhe_list{
+            position: absolute;
+            width: 100%;
+            top:1.2rem;
+            bottom: 0;
+            background-color: #fff;
             overflow-y: auto;
-            height: 5.42rem;
-            margin-top: 0.16rem;
             li{
                 display: flex;
                 align-items: center;

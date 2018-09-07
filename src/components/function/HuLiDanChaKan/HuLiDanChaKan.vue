@@ -28,11 +28,12 @@
 </template>
 
 <script>
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name: "HuLiDanChaKan",
         data:()=>({
-            HuanZheList:[]
+            HuanZheList:[],
+            url:''
         }),
         methods:{
             R_back(){
@@ -52,7 +53,7 @@
             get_HuanZheList_sync(){
                 $.ajax({
                     type:'get',
-                    url:url+'/threetest/queryPatByUserIdMed',
+                    url:this.url+'/threetest/queryPatByUserIdMed',
                     async:false,
                     dataType:'json',
                     data:{
@@ -68,6 +69,10 @@
                     }
                 })
             }
+        },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             this.get_HuanZheList_sync();
@@ -85,9 +90,12 @@
             color: red;
         }
         .HuanZhe_list{
+            position: absolute;
+            width: 100%;
+            top:1.2rem;
+            bottom: 0;
+            background-color: #fff;
             overflow-y: auto;
-            height: 5.42rem;
-            margin-top: 0.16rem;
             li{
                 display: flex;
                 align-items: center;

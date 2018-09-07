@@ -8,7 +8,8 @@
             <span>筛选</span>
             <span>分类</span>
         </div>
-        <mt-loadmore :maxDistance="150" :bottom-method="loadBottom" :autoFill="false" ref="loadmore" class="HuanZhe_list">
+
+        <div class="HuanZhe_list">
             <ul>
                 <li v-for="(a,b) in HuanZheList" @click="R_HuanZheFeiYongChaXun_detail(a)">
                     <div class="left">
@@ -27,21 +28,19 @@
                     <span class="fa fa-chevron-right rightStyle"></span>
                 </li>
             </ul>
-        </mt-loadmore>
+        </div>
 
     </div>
 </template>
 
 <script>
-    import Vue from 'vue';
-    import { Loadmore } from 'mint-ui';
-    import {url,tip,con} from "../../../js/global";
+    import {tip,con} from "../../../js/global";
 
-    Vue.component(Loadmore.name, Loadmore);
     export default {
         name: "HuanZheFeiYongChaXun",
         data:()=>({
             HuanZheList:[],
+            url:''
         }),
         methods:{
             R_HuanZheFeiYongChaXun_detail(obj){
@@ -62,9 +61,6 @@
             whether_row1_special_red(a){
                 return !(a === '8c03350ef1cf5933829989b7bc109ea0' || a === 'cc82870c48c750ef873905adc8c38095');
             },
-            loadBottom(){
-
-            },
             R_back(){
                 this.$router.go(-1);
             }
@@ -78,11 +74,15 @@
                 }
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             let this_=this;
             $.ajax({
                 type:'get',
-                url:url+'/costProject/findCostListMed',
+                url:this.url+'/costProject/findCostListMed',
                 async:false,
                 dataType:'json',
                 data:{
@@ -114,9 +114,12 @@
             color: red!important;
         }
         .HuanZhe_list{
+            position: absolute;
+            width: 100%;
+            top:1.2rem;
+            bottom: 0;
+            background-color: #fff;
             overflow-y: auto;
-            height: 5.42rem;
-            margin-top: 0.16rem;
             li{
                 display: flex;
                 align-items: center;

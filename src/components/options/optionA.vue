@@ -53,8 +53,8 @@
 </template>
 
 <script>
-    import {url,con,tip} from "../../js/global";
-    import bottomNav_block from '../nav/bottomNav_block.vue';
+    import {con,tip,platform_YiHu} from "../../js/global";
+    import bottomNav_block from '../nav/bottomNav_block.vue'
 
     export default {
         name: "optionA",
@@ -63,19 +63,19 @@
             searchResult:[],
             searchContent:'',
             mockData:undefined,
-            url:url,
+            url:''
         }),
         watch:{
             searchContent(a,b){
                 if(this.searchContent.length>=8){
                     $.ajax({
                         post:'get',
-                        url:url+'/user/queryByclinic',
+                        url:this.url+'/user/queryByclinic',
                         async:true,
                         dataType: 'json',
                         data:{
                             userId:sessionStorage.getItem('userId'),
-                            clinicNum:this.searchContent
+                            clinicNum:this.searchContent,
                         },
                         success:(data)=>{
                             con('患者搜索结果',data);
@@ -128,13 +128,18 @@
                 }
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function(){
             $.ajax({
                 type:'get',
-                url:url+'/operatorAddress/queryByUserId',
+                url:this.url+'/operatorAddress/queryByUserId',
                 async:false,
                 dataType:'json',
                 data:{
+                    platformId:platform_YiHu,
                     userId:sessionStorage.getItem('userId')
                 },
                 success:(data)=>{

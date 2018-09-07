@@ -37,7 +37,7 @@
                         <option value="4">20:00</option>
                         <option value="5">24:00</option>
                     </select>
-                    {{allData_i}}
+                    <!--{{allData_i}}-->
                 </div>
                 <div class="row">
                     <p>体温</p>
@@ -175,7 +175,7 @@
     Vue.component(TabContainerItem.name, TabContainerItem);
     import { Switch } from 'mint-ui';
     Vue.component(Switch.name, Switch);
-    import {url,tip,con} from "../../../js/global";
+    import {tip,con} from "../../../js/global";
 
     export default {
         name: "TiWenDanLuRu_detail",
@@ -232,7 +232,8 @@
             active:'a',
             dateValue:undefined,
             timeValue:undefined,
-            whether_physicsCooling:false
+            whether_physicsCooling:false,
+            url:''
         }),
         methods:{
             showA(){//stand by
@@ -286,7 +287,7 @@
                 };
                 $.ajax({
                     type:'get',
-                    url:url+'/threetest/queryNursingRecord',
+                    url:this.url+'/threetest/queryNursingRecord',
                     async:false,
                     dataType:'json',
                     data:{
@@ -346,7 +347,7 @@
                 let this_=this;
                 $.ajax({
                     type:'post',
-                    url:url+'/threetest/saveOrUpdateRecord',
+                    url:this.url+'/threetest/saveOrUpdateRecord',
                     async:false,
                     dataType:'json',
                     traditional:true,
@@ -392,11 +393,15 @@
 
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             let this_=this;
             $.ajax({
                 type:'get',
-                url:url+'/patientInfo/findPatInfoByClinicId',
+                url:this.url+'/patientInfo/findPatInfoByClinicId',
                 async:false,
                 dataType:'json',
                 data:{
@@ -415,7 +420,7 @@
             });
             $.ajax({
                 type:'get',
-                url:url+'/dateUtil/getDateMapInfo',
+                url:this.url+'/dateUtil/getDateMapInfo',
                 async:false,
                 dataType:'json',
                 data:{
@@ -455,7 +460,7 @@
             });
             $.ajax({//get_体温类型选项
                 type:'get',
-                url:url+'/threetest/queryTempType',
+                url:this.url+'/threetest/queryTempType',
                 async:false,
                 dataType:'json',
                 data:{
@@ -474,7 +479,7 @@
             });
             $.ajax({//get_事件类型选项
                 type:'get',
-                url:url+'/threetest/queryNurseEvent',
+                url:this.url+'/threetest/queryNurseEvent',
                 async:false,
                 dataType:'json',
                 data:{
@@ -493,7 +498,7 @@
             });
             $.ajax({//get_备注选项
                 type:'get',
-                url:url+'/threetest/queryNurseMark',
+                url:this.url+'/threetest/queryNurseMark',
                 async:false,
                 dataType:'json',
                 data:{

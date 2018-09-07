@@ -1,6 +1,7 @@
 import echarts from 'echarts';
-import {url} from "../../../js/global";
-let myUrl=url;
+let myUrl=localStorage.getItem('EchartsUrl');
+
+
 function connect(url,Data,successFn,errorFn,asyn) {
     if(!asyn){
         asyn = false;

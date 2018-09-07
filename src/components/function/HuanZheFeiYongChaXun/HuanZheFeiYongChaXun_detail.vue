@@ -5,7 +5,7 @@
             <span>患者费用查看</span>
         </div>
         <div class="_global_HuanZheBox">
-            <span>{{HuanZhe_Info.bedName}}床</span><!--stand by-->
+            <span>{{HuanZhe_Info.bedName}}</span><!--stand by-->
             <span>{{HuanZhe_Info.name}}</span>
             <span>（{{HuanZhe_Info.sex}} {{HuanZhe_Info.age}}）</span>
             <span>{{HuanZhe_Info.clinicNum}}</span>
@@ -65,7 +65,7 @@
     import Vue from 'vue';
     import { Switch } from 'mint-ui';
     Vue.component(Switch.name, Switch);
-    import {con,url,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name: "HuanZheFeiYongChaXun_detail",
         props:['HuanZheFeiYongChaXun_detail'],
@@ -74,7 +74,8 @@
             aData:[],
             bData:[],
             whether_summary:true,
-            HuanZhe_Info:undefined
+            HuanZhe_Info:undefined,
+            url:''
         }),
         methods:{
             R_back(){
@@ -84,7 +85,7 @@
                 let this_=this;
                 $.ajax({
                     type:'get',
-                    url:url+'/costProject/querySummary',
+                    url:this.url+'/costProject/querySummary',
                     async:false,
                     dataType: 'json',
                     data:{
@@ -106,7 +107,7 @@
                 let this_=this;
                 $.ajax({
                     type:'get',
-                    url:url+'/costProject/queryListDetail',
+                    url:this.url+'/costProject/queryListDetail',
                     async:false,
                     dataType:'json',
                     data:{
@@ -133,11 +134,15 @@
                 }
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             let this_=this;
             $.ajax({
                 type:'get',
-                url:url+'/user/queryByclinicIdMed',
+                url:this.url+'/user/queryByclinicIdMed',
                 async:false,
                 dataType:'json',
                 data:{

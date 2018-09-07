@@ -1,6 +1,5 @@
 <template>
     <div class="login">
-        <div style="display: block; position: absolute; left: 5px; top: 5px; opacity: 0.2"><input type="text" v-model="url"></div>
         <img class="loginImg" src="../images/login_Img.png" alt="移动医护">
         <span class="loginTitle">移动医护</span>
         <div class="box">
@@ -15,29 +14,76 @@
             <span class="forgetPassword">忘记密码？</span>
             <button class="loginBtn" @click="login">登录</button>
         </div>
-        <div class="more">更多</div>
+        <div class="more" @click="more">更多</div>
+
+        <div class="serverList">
+            <ul>
+                <li v-for="(a,b) in serverList" @click="makeSure_server(a)">
+                    <span>{{a}}</span>
+                    <span @click="remove_serverItem(b)" class="fa fa-close"></span>
+                </li>
+            </ul>
+            <div class="addServer">
+                <input type="text" maxlength="50" v-model="serverItem">
+                <button @click="add_serverItem">add</button>
+            </div>
+        </div>
+        <zzc-1 @click.native="cancel_more"></zzc-1>
+
     </div>
 </template>
 
 <script>
-    import {tip,con,userId} from '../js/global.js';
+    import {tip,con,userId,platform_YiHu} from '../js/global.js';
+    import zzc1 from './zzc/zzc1.vue';
     export default {
         name: "login",
         data:()=>({
-            url:'http://7.0.0.116:8084/StarTrekMED',
-            // url:'http://7.0.0.114:8083/StarTrekMED',
             user:1733,
-            pas:123456
+            pas:123456,
+            serverList:[],
+            serverItem:'',
+            url:''
         }),
+        components:{
+            zzc1
+        },
         methods:{
+            makeSure_server(server){
+                this.$store.commit('makeSure_url',server);
+                this.url=this.$store.state.url;
+                tip.fromTop(`服务器已切换到${this.url}`);
+                $('.login .zzc1').fadeOut('fast');
+                $('.login .serverList').fadeOut('');
+            },
+            remove_serverItem(b){
+                event.stopPropagation();
+                this.serverList.splice(b,1);
+                localStorage.setItem('serverList',this.serverList);
+            },
+            add_serverItem(){
+                if(this.serverItem){
+                    this.serverList.push(this.serverItem);
+                    this.serverItem='';
+                    localStorage.setItem('serverList',this.serverList);
+                }else{
+                    tip.failed('请输入有效的地址',1500);
+                }
+            },
+            more(){
+                $('.login .zzc1').fadeIn('fast');
+                $('.login .serverList').fadeIn('');
+            },
+            cancel_more(){
+                $('.login .zzc1').fadeOut('fast');
+                $('.login .serverList').fadeOut('');
+            },
             clean:function (a,b) {
                 this[a]=undefined;
                 b.target.previousElementSibling.focus();
             },
             login:function () {
                 let this_=this;
-                this_.$router.push({name:'optionA'});
-                return;
                 $.ajax({
                     type:'post',
                     url:this.url+'/user/checkLogin',
@@ -45,7 +91,8 @@
                     dataType:'json',
                     data:{
                         username:this.user,
-                        password:this.pas
+                        password:this.pas,
+                        platformId:platform_YiHu
                     },
                     success:function(data){
                         con('登陆',data);
@@ -53,13 +100,19 @@
                             tip.failed(data.message,1500);
                         }else{
                             tip.success('登陆成功',1000,function () {
+                                localStorage.setItem('EchartsUrl',this_.url);
                                 sessionStorage.setItem('userId',data.resultDomain.user.id);
                                 this_.$router.push({name:'optionA'});
+                                this_.$store.commit('makeSure_operation',data.resultDomain.user);
                             });
                         }
                     }
                 })
             }
+        },
+        beforeMount:function () {
+            this.serverList=localStorage.getItem('serverList').split(',');
+            this.url=this.serverList[0];
         }
     }
 </script>
@@ -138,6 +191,54 @@
             margin-top: 0.46rem;
             color: #dcdee4;
             font-size: 0.14rem;
+        }
+        .serverList{
+            display: none;
+            position: absolute;
+            border-radius: 8px;
+            z-index: 6;
+            top: 2.7rem;
+            width: 3rem;
+            height: 3rem;
+            background-color: #5F74B6;
+            color: #fff;
+            ul{
+                overflow-y: auto;
+                height: 2.5rem;
+                border-bottom: 0.02rem solid #27B6F5;
+            }
+            li{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.1rem;
+                border-bottom: 0.01rem solid #fff;
+                span:nth-child(2){
+                    font-size: 0.13rem;
+                }
+            }
+            .addServer{
+                margin-top: 0.1rem;
+                padding: 0.08rem 0.1rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.13rem;
+                input{
+                    width: 2.3rem;
+                    border-bottom: 0.01rem solid #fff;
+                    background-color: transparent;
+                    color: #fff;
+                    padding: 0 0.1rem;
+                }
+                button{
+                    background-color: transparent;
+                    border: 0;
+                    color: #fff;
+                    font-size: 0.16rem;
+                    outline: none;
+                }
+            }
         }
     }
 </style>

@@ -9,9 +9,11 @@ Vue.use(Vuex);
 import 'mint-ui/lib/style.min.css';
 import './styles/global.less';
 
-import 'jquery';//expose
-import 'better-scroll';//expose
+import 'jquery';//exp
+import 'better-scroll'//poz;
 import './plugins/indigo.js';
+import './js/localStorage.js';
+
 
 
 import app from './app.vue';
@@ -19,13 +21,28 @@ import app from './app.vue';
 const store=new Vuex.Store({
    state:{
        HuanZhe:undefined,
+       operation:undefined,
+       BingQuJiaoBan__check_KeShi:undefined,
+       url:'',
        test:123
    },
    mutations:{
         makeSure_HuanZhe(state,data){
             state.HuanZhe=data;
-            con('VuexCommit: ',data);
-        }
+            con('VuexCommit_HuanZhe: ',data);
+        },
+       makeSure_operation(state,data){
+            state.operation=data;
+            con('VuexCommit_operation: ',data);
+       },
+       makeSure_BingQuJiaoBan__check_KeShi(state,data){
+           state.BingQuJiaoBan__check_KeShi=data;
+           con('VuexCommit_BingQuJiaoBan__check_KeShi: ',data);
+       },
+       makeSure_url(state,data){
+           state.url=data;
+           con('当前连接的服务器',data);
+       }
     }
 });
 

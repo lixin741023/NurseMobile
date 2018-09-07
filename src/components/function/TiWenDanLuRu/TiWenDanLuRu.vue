@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     import { InfiniteScroll } from 'mint-ui';
     import Vue from 'vue';
     Vue.use(InfiniteScroll);
@@ -39,7 +39,8 @@
             max_HuanZheList:1,
             rows_:10,
             page_:0,
-            HuanZheList:[]
+            HuanZheList:[],
+            url:''
         }),
         methods:{
             whether_row1_special_red(a){
@@ -66,7 +67,7 @@
                 if(this.HuanZheList.length<this.max_HuanZheList){
                     $.ajax({
                         type:'get',
-                        url:url+'/patientInfo/findPatientInfosByPage',
+                        url:this.url+'/patientInfo/findPatientInfosByPage',
                         async:false,
                         dataType:'json',
                         data:{
@@ -95,6 +96,10 @@
                 }
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             this.loadMore_HuanZheList();
         }
@@ -111,9 +116,12 @@
         }
         .componentsInit;
         .HuanZhe_list{
+            position: absolute;
+            width: 100%;
+            top:1.2rem;
+            bottom: 0;
+            background-color: #fff;
             overflow-y: auto;
-            height: 5.42rem;
-            margin-top: 0.16rem;
             li{
                 display: flex;
                 align-items: center;

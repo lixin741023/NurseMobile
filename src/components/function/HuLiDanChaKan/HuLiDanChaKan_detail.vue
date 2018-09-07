@@ -60,7 +60,7 @@
     import { TabContainer, TabContainerItem } from 'mint-ui';
     Vue.component(TabContainer.name, TabContainer);
     Vue.component(TabContainerItem.name, TabContainerItem);
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name:"HuLiDanChaKan_detail",
         props:['HuLiDanChaKan_detail'],
@@ -72,12 +72,13 @@
             chooseDay:'',
             activeTab:undefined,
             allData:undefined,
+            url:''
         }),
         watch:{
             chooseDay(date){
                 $.ajax({
                     type:'get',
-                    url:url+'/threetest/queryNursingByDays',
+                    url:this.url+'/threetest/queryNursingByDays',
                     async:false,
                     dataType:'json',
                     data:{
@@ -127,7 +128,7 @@
             get_toDay(){
                 $.ajax({
                     type:'get',
-                    url:url+'/dateUtil/getDateMapInfo',
+                    url:this.url+'/dateUtil/getDateMapInfo',
                     async:false,
                     dataType:'json',
                     data:{
@@ -145,10 +146,14 @@
                 })
             },
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             $.ajax({
                 type:'get',
-                url:url+'/user/queryByclinicIdMed',
+                url:this.url+'/user/queryByclinicIdMed',
                 async:false,
                 dataType:'json',
                 data:{

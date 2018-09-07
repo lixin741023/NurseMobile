@@ -211,14 +211,15 @@
 
 <script>
     import {drawThreeTestList} from "./render_Echarts";
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name: "TiWenDanChaKan_detail",
         props:['TiWenDanChaKan_detail'],
         data:()=>({
             HuanZheInfo:{},
             nowPage:1,
-            allPage:undefined
+            allPage:undefined,
+            url:''
         }),
         methods:{
             R_back(){
@@ -245,16 +246,19 @@
 
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             let this_=this;
             $.ajax({
                 type:'get',
-                url:url+'/threetest/findPaitientByClinicId',
+                url:this.url+'/threetest/findPaitientByClinicId',
                 async:false,
                 dataType:'json',
                 data:{
-                    // clinicId:this.TiWenDanChaKan_detail.clinicId, stand by
-                    clinicId:'4ec60f3fcdc946e180d0bee3351d14ab',
+                    clinicId:this.TiWenDanChaKan_detail.clinicId,
                     userId:sessionStorage.getItem('userId')
                 },
                 success:(data)=>{
@@ -268,7 +272,7 @@
             });
             $.ajax({
                 type:'get',
-                url:url+'/threetest/findTttotalByClinicId',
+                url:this.url+'/threetest/findTttotalByClinicId',
                 async:false,
                 dataType:'json',
                 data:{

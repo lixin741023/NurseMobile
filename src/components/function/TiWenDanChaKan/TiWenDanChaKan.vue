@@ -10,7 +10,7 @@
         </div>
 
         <div class="HuanZhe_list">
-            <ul>
+            <ul v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="0" infinite-scroll-immediate-check="false" >
                 <li v-for="(a,b) in HuanZheList" @click="R_TiWenDanChaKan_detail(a)">
                     <div class="left">
                         <span class="name">{{a.patientName}}</span>
@@ -27,16 +27,21 @@
 </template>
 
 <script>
-    import {url,con,tip} from "../../../js/global";
+    import {con,tip} from "../../../js/global";
     export default {
         name: "TiWenDanChaKan",
         data:()=>({
             HuanZheList:[],
             max_HuanZheList:1,
             rows_:10,
-            page_:0
+            page_:0,
+            url:''
         }),
         methods:{
+            loadMore() {
+                this.loading = false;
+                this.loadMore_HuanZheList();
+            },
             R_TiWenDanChaKan_detail(obj){
                 this.$router.push({
                     name:'TiWenDanChaKan_detail',
@@ -57,7 +62,7 @@
                 if(this.HuanZheList.length<this.max_HuanZheList){
                     $.ajax({
                         type:'get',
-                        url:url+'/patientInfo/findPatientInfosByPage',
+                        url:this.url+'/patientInfo/findPatientInfosByPage',
                         async:false,
                         dataType:'json',
                         data:{
@@ -86,6 +91,10 @@
                 }
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+            this.url='http://7.0.0.114:8083/StarTrekMED';
+        },
         beforeMount:function () {
             this.loadMore_HuanZheList();
         }
@@ -102,9 +111,12 @@
             color: red;
         }
         .HuanZhe_list{
+            position: absolute;
+            width: 100%;
+            top:1.2rem;
+            bottom: 0;
+            background-color: #fff;
             overflow-y: auto;
-            height: 5.42rem;
-            margin-top: 0.16rem;
             li{
                 display: flex;
                 align-items: center;
