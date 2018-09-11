@@ -42,11 +42,11 @@
                 <img :src="url+a.icon">
                 <span class="name">{{a.name}}</span>
             </div>
-            <router-link :to="{name:'optionC'}" tag="div" class="oftenItem">
+            <div class="oftenItem" @click="R_optionC()">
                 <em>optionC</em>
                 <img src="../../images/oftenItem_more.png" >
                 <span class="name">更多</span>
-            </router-link>
+            </div>
         </div>
         <bottomNavBlock></bottomNavBlock>
     </div>
@@ -55,7 +55,7 @@
 <script>
     import {con,tip,platform_YiHu} from "../../js/global";
     import bottomNav_block from '../nav/bottomNav_block.vue'
-
+    import bottomNav from '../nav/bottomNav.vue'
     export default {
         name: "optionA",
         data:()=>({
@@ -93,10 +93,15 @@
             bottomNavBlock:bottomNav_block
         },
         methods:{
+            R_optionC(){
+                this.$router.push({
+                    name:'optionC'
+                })
+            },
             R_fun(dest){
                 this.$router.push({
                     name:dest
-                })
+                });
             },
             makeSure_HuanZhe(a){
                 this.$store.commit('makeSure_HuanZhe',a);
@@ -130,7 +135,6 @@
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function(){
             $.ajax({

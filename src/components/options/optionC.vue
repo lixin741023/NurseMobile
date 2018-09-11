@@ -1,7 +1,7 @@
 <template>
     <div class="optionC">
         <div class="navTitle">
-            <span v-for="(a,b) in mockData" :class="{'active_navTitle':active===a.id}" @click="active=a.id">
+            <span v-for="(a,b) in mockData" :class="{'active_navTitle':active===a.id}" @click="choose_tabOption(a.id)">
                 {{a.name}}
             </span>
         </div>
@@ -56,7 +56,7 @@
             popupVisible:false,
             url:'',
             mockData:undefined,
-            active:'tab-container1'
+            active:undefined
         }),
         components:{
             bottomNavBlock:bottomNav_block
@@ -70,6 +70,9 @@
             }
         },
         methods:{
+            choose_tabOption(id){
+                this.active=id;
+            },
             class_top(id){
                 return this.settingArray.top.indexOf(id) !== -1;
             },
@@ -126,12 +129,12 @@
             },
             R_fun(url){
                 event.preventDefault();
+                this.$store.commit('makeSure_optionC_tab_status',this.active);
                 this.$router.push({name:url});
             }
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             $.ajax({
@@ -151,6 +154,21 @@
                         this.whether=data.parameter;
                         this.mockData=data.resultDomains;
                         this.active=this.mockData[0].id;
+                        // function bubbleSort(arr) { stand by
+                        //     var len = arr.length;
+                        //     for (var i = 0; i < len; i++) {
+                        //         for (var j = 0; j < len - 1 - i; j++) {
+                        //             if (arr[j] > arr[j+1]) { //相邻元素两两对比
+                        //                 var temp = arr[j+1]; //元素交换
+                        //                 arr[j+1] = arr[j];
+                        //                 arr[j] = temp;
+                        //             }
+                        //         }
+                        //     }
+                        //     return arr;
+                        // }
+                        // let arr=[312,45,4,234,3,6,456,45,34,5,3,42,34,2,42,];
+                        // console.log(bubbleSort(arr));
                         for(let i=0; i<data.resultDomains.length; i++){
                             for(let x=0; x<data.resultDomains[i].children.length; x++){
                                 if(data.resultDomains[i].children[x].top){
@@ -164,6 +182,9 @@
                     }
                 }
             });
+            if(this.$store.state.optionC_tab_status){
+                this.active=this.$store.state.optionC_tab_status;
+            }
         },
         beforeRouteLeave(a,b,next){
             if(!this.whetherSettingArray){
@@ -186,7 +207,7 @@
                             tip.failed(data.message,1500);
                         }else{
                             tip.success('设置保存成功',1000,function () {
-                                next()
+                                next();
                             })
                         }
                     }

@@ -89,7 +89,6 @@
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             this.get_HuanZheList_sync();

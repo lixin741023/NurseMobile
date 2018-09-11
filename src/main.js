@@ -23,13 +23,14 @@ const store=new Vuex.Store({
        HuanZhe:undefined,
        operation:undefined,
        BingQuJiaoBan__check_KeShi:undefined,
-       url:'',
+       url:'http://7.0.0.116:8084/StarTrekMED',
+       optionC_tab_status:undefined,
        test:123
    },
    mutations:{
-        makeSure_HuanZhe(state,data){
+       makeSure_HuanZhe(state,data){
             state.HuanZhe=data;
-            con('VuexCommit_HuanZhe: ',data);
+            con('VuexCommit_HuanZhe',data);
         },
        makeSure_operation(state,data){
             state.operation=data;
@@ -42,6 +43,10 @@ const store=new Vuex.Store({
        makeSure_url(state,data){
            state.url=data;
            con('当前连接的服务器',data);
+       },
+       makeSure_optionC_tab_status(state,data){
+            state.optionC_tab_status=data;
+            con('当前选项卡',data);
        }
     }
 });

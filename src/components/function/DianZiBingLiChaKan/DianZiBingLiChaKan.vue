@@ -27,12 +27,13 @@
 </template>
 
 <script>
-    import {url,tip,con} from "../../../js/global";
+    import {tip,con} from "../../../js/global";
 
     export default {
         name: "DianZiBingLiChaKan",
         data:()=>({
-            HuanZheList:undefined
+            HuanZheList:undefined,
+            url:''
         }),
         methods:{
             R_back(){
@@ -44,7 +45,7 @@
             get_HuanZheList_sync(){
                 $.ajax({
                     type:'get',
-                    url:url+'/emr/queryByNurseUserIdMed',
+                    url:this.url+'/emr/queryByNurseUserIdMed',
                     async:false,
                     dataType:'json',
                     data:{
@@ -68,6 +69,9 @@
                     }
                 })
             }
+        },
+        created:function(){
+            this.url=this.$store.state.url;
         },
         beforeMount:function () {
             this.get_HuanZheList_sync();

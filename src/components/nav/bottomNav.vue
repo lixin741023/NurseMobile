@@ -1,57 +1,63 @@
 <template>
     <div class="bottomNav">
-        <div class="item" @click="style('optionA','a')" :class="{'active':a}">
-            <img v-show="a" src="../../images/optionA_check.png" alt="首页">
-            <img v-show="!a" src="../../images/optionA.png" alt="首页">
+        <div class="item" @click="style('optionA',0)" :class="{'active':view[0]}">
+            <img v-show="view[0]" src="../../images/optionA_check.png" alt="首页">
+            <img v-show="!view[0]" src="../../images/optionA.png" alt="首页">
             <span class="activeSpan">首页</span>
         </div>
-        <div class="item" @click="style('optionB','b')" :class="{'active':b}">
-            <img v-show="b" src="../../images/optionB_check.png" alt="护理">
-            <img v-show="!b" src="../../images/optionB.png" alt="护理">
+        <div class="item" @click="style('optionB',1)" :class="{'active':view[1]}">
+            <img v-show="view[1]" src="../../images/optionB_check.png" alt="护理">
+            <img v-show="!view[1]" src="../../images/optionB.png" alt="护理">
             <span class="activeSpan">护理</span>
         </div>
-        <div class="item" @click="style('optionC','c')" :class="{'active':c}">
-            <img v-show="c" src="../../images/optionC_check.png" alt="功能">
-            <img v-show="!c" src="../../images/optionC.png" alt="功能">
+        <div class="item" @click="style('optionC',2)" :class="{'active':view[2]}">
+            <img v-show="view[2]" src="../../images/optionC_check.png" alt="功能">
+            <img v-show="!view[2]" src="../../images/optionC.png" alt="功能">
             <span class="activeSpan">功能</span>
         </div>
-        <div class="item" @click="style('optionD','d')" :class="{'active':d}">
-            <img v-show="d" src="../../images/optionD_check.png" alt="消息">
-            <img v-show="!d" src="../../images/optionD.png" alt="消息">
+        <div class="item" @click="style('optionD',3)" :class="{'active':view[3]}">
+            <img v-show="view[3]" src="../../images/optionD_check.png" alt="消息">
+            <img v-show="!view[3]" src="../../images/optionD.png" alt="消息">
             <span class="activeSpan">消息</span>
         </div>
-        <div class="item" @click="style('optionE','e')" :class="{'active':e}">
-            <img v-show="e" src="../../images/optionE_check.png" alt="设置">
-            <img v-show="!e" src="../../images/optionE.png" alt="设置">
+        <div class="item" @click="style('optionE',4)" :class="{'active':view[4]}">
+            <img v-show="view[4]" src="../../images/optionE_check.png" alt="设置">
+            <img v-show="!view[4]" src="../../images/optionE.png" alt="设置">
             <span class="activeSpan">设置</span>
         </div>
     </div>
 </template>
 
 <script>
+    import Vue from 'vue';
     export default {
         name: "bottomNav",
         data:()=>({
-            a:true,
-            b:false,
-            c:false,
-            d:false,
-            e:false
+            view:[],
         }),
+        watch:{
+            $route(a,b){
+                this.viewControl(a.name);
+            }
+        },
         methods:{
+            viewControl(currentRoute){
+                switch (currentRoute) {
+                    case 'optionA':this.view=[true,false,false,false,false];break;
+                    case 'optionB':this.view=[false,true,false,false,false];break;
+                    case 'optionC':this.view=[false,false,true,false,false];break;
+                    case 'optionD':this.view=[false,false,false,true,false];break;
+                    case 'optionE':this.view=[false,false,false,false,true];break;
+                }
+            },
             style(x,img){
-                let arr=['a','b','c','d','e'];
                 this.$router.push({
                     name:x
                 });
-                for(let i=0; i<arr.length; i++){
-                    if(img===arr[i]){
-                        this[img]^=1;
-                    }else{
-                        this[arr[i]]=false;
-                    }
-                }
             }
+        },
+        beforeMount:function () {
+            this.viewControl(this.$route.name);
         }
     }
 </script>

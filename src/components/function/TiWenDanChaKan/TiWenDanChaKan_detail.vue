@@ -248,7 +248,6 @@
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             let this_=this;
@@ -266,7 +265,7 @@
                     if(data.error){
                         tip.failed(data.message,1500)
                     }else{
-                        this_.HuanZheInfo=data;
+                        this_.HuanZheInfo=data.resultDomain;
                     }
                 }
             });

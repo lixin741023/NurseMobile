@@ -80,14 +80,14 @@
                 yList.animate({
                     left:'100%',
                     opacity:'0',
-                },500,()=>{
+                },400,()=>{
                     yList.css('display','none');
                 });
                 xList.css('display','block');
                 xList.animate({
                     left:'0',
                     opacity:'1',
-                },750);
+                },550);
             },
             get_normal(id){
                 let content='';
@@ -129,7 +129,7 @@
                             tip.failed(data.message,1500);
                         }else{
                             for(let i=0; i<data.resultDomains.length; i++){
-                                content+=data.resultDomains[i].content.source;
+                                content+=data.resultDomains[i];
                             }
                             this.html=content;
                         }
@@ -197,7 +197,7 @@
                 xList.animate({
                     left:'100%',
                     opacity:'0',
-                },750,()=>{
+                },550,()=>{
                     xList.css('display','none');
                 });
 
@@ -205,13 +205,12 @@
                 yList.animate({
                     left:'0',
                     opacity:'1',
-                },500);
+                },400);
 
             }
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             $.ajax({

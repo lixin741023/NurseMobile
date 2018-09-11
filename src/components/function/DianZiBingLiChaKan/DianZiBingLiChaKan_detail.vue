@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import {url,tip,con} from "../../../js/global";
+    import {tip,con} from "../../../js/global";
 
     export default {
         name: "DianZiBingLiChaKan_detail",
@@ -59,7 +59,8 @@
             xList:[],
             yList:[],
             html:undefined,
-            checkItem:undefined
+            checkItem:undefined,
+            url:''
         }),
         watch:{
             checkItem(id){
@@ -97,7 +98,7 @@
                 let content='';
                 $.ajax({
                     type:'get',
-                    url:url+'/emr/queryEmrDetailByEmrId',
+                    url:this.url+'/emr/queryEmrDetailByEmrId',
                     async:false,
                     dataType:'json',
                     data:{
@@ -119,7 +120,7 @@
                 let content='';
                 $.ajax({
                     type:'get',
-                    url:url+'/emr/queryWrittenEmr',
+                    url:this.url+'/emr/queryWrittenEmr',
                     async:false,
                     dataType:'json',
                     data:{
@@ -153,7 +154,7 @@
             get_xList(){
                 $.ajax({
                     type:'get',
-                    url:url+'/emr/queryClassTreeMed',
+                    url:this.url+'/emr/queryClassTreeMed',
                     async:false,
                     dataType:'json',
                     data:{
@@ -173,7 +174,7 @@
                 if(canDoIt===0){return}
                 $.ajax({
                     type:'get',
-                    url:url+'/emr/queryEmrByCliIdAndClassIdMed',
+                    url:this.url+'/emr/queryEmrByCliIdAndClassIdMed',
                     async:false,
                     dataType:'json',
                     data:{
@@ -213,10 +214,13 @@
 
             }
         },
+        created:function(){
+            this.url=this.$store.state.url;
+        },
         beforeMount:function () {
             $.ajax({
                 type:'get',
-                url:url+'/user/queryByclinicIdMed',
+                url:this.url+'/user/queryByclinicIdMed',
                 async:false,
                 dataType:'json',
                 data:{

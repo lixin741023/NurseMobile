@@ -52,7 +52,7 @@
             makeSure_server(server){
                 this.$store.commit('makeSure_url',server);
                 this.url=this.$store.state.url;
-                tip.fromTop(`服务器已切换到${this.url}`);
+                tip.fromTop(`服务器已切换到${this.url}`,2500);
                 $('.login .zzc1').fadeOut('fast');
                 $('.login .serverList').fadeOut('');
             },
@@ -100,10 +100,11 @@
                             tip.failed(data.message,1500);
                         }else{
                             tip.success('登陆成功',1000,function () {
-                                localStorage.setItem('EchartsUrl',this_.url);
                                 sessionStorage.setItem('userId',data.resultDomain.user.id);
-                                this_.$router.push({name:'optionA'});
                                 this_.$store.commit('makeSure_operation',data.resultDomain.user);
+                                this_.$router.push({name:'optionA'});
+
+                                localStorage.setItem('EchartsUrl',this_.url);
                             });
                         }
                     }

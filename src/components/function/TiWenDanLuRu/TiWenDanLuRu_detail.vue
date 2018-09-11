@@ -239,6 +239,17 @@
             showA(){//stand by
                 console.log(this.allData);
             },
+            handle_eventTimes(){
+                let endArr=[];
+                for(let i=0; i<this.allData.eventTimes.length; i++){
+                    if(this.allData.eventTimes[i]){
+                        endArr[i]=`${this.chooseDay} ${this.allData.eventTimes[i]}`
+                    }else{
+                        endArr[i]=''
+                    }
+                }
+                return endArr;
+            },
             makeSure_date(date){
                 let year=date.getFullYear();
                 let month=date.getMonth();
@@ -304,31 +315,67 @@
                             this_.allData.clinicId=this_.TiWenDanLuRu_detail.clinicId;
                             this_.allData.time=this_.chooseDay;
                             for(let i=0; i<data.resultDomains.length; i++){//体温类型
-                                Vue.set(this_.allData.typeIds,i,data.resultDomains[i].typeId);
+                                if(data.resultDomains[i].typeId){
+                                    Vue.set(this_.allData.typeIds,i,data.resultDomains[i].typeId);
+                                }else{
+                                    Vue.set(this_.allData.typeIds,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//温度
-                                Vue.set(this_.allData.tempers,i,data.resultDomains[i].temper);
+                                if(data.resultDomains[i].temper){
+                                    Vue.set(this_.allData.tempers,i,data.resultDomains[i].temper);
+                                }else{
+                                    Vue.set(this_.allData.tempers,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//物理降温
-                                Vue.set(this_.allData.physicsTemps,i,data.resultDomains[i].physicsTemp);
+                                if(data.resultDomains[i].physicsTemp){
+                                    Vue.set(this_.allData.physicsTemps,i,data.resultDomains[i].physicsTemp);
+                                }else{
+                                    Vue.set(this_.allData.physicsTemps,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//脉搏
-                                Vue.set(this_.allData.pulses,i,data.resultDomains[i].pulse);
+                                if(data.resultDomains[i].pulse){
+                                    Vue.set(this_.allData.pulses,i,data.resultDomains[i].pulse);
+                                }else{
+                                    Vue.set(this_.allData.pulses,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//心率
-                                Vue.set(this_.allData.bpms,i,data.resultDomains[i].bpm);
+                                if(data.resultDomains[i].bpm){
+                                    Vue.set(this_.allData.bpms,i,data.resultDomains[i].bpm);
+                                }else{
+                                    Vue.set(this_.allData.bpms,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//呼吸
-                                Vue.set(this_.allData.breathings,i,data.resultDomains[i].breathing);
+                                if(data.resultDomains[i].breathing){
+                                    Vue.set(this_.allData.breathings,i,data.resultDomains[i].breathing);
+                                }else{
+                                    Vue.set(this_.allData.breathings,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//事件类型
-                                Vue.set(this_.allData.nurseEventIds,i,data.resultDomains[i].nurseEventId);
+                                if(data.resultDomains[i].nurseEventId){
+                                    Vue.set(this_.allData.nurseEventIds,i,data.resultDomains[i].nurseEventId);
+                                }else{
+                                    Vue.set(this_.allData.nurseEventIds,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//事件时间
-                                Vue.set(this_.allData.eventTimes,i,data.resultDomains[i].date);
+                                if(data.resultDomains[i].date){
+                                    Vue.set(this_.allData.eventTimes,i,data.resultDomains[i].date);
+                                }else{
+                                    Vue.set(this_.allData.eventTimes,i,'');
+                                }
                             }
                             for(let i=0; i<data.resultDomains.length; i++){//备注
-                                Vue.set(this_.allData.marks,i,data.resultDomains[i].mark);
+                                if(data.resultDomains[i].markId){
+                                    Vue.set(this_.allData.marks,i,data.resultDomains[i].markId);
+                                }else{
+                                    Vue.set(this_.allData.marks,i,'');
+                                }
                             }
                             this_.allData.amBloodsysPre=data.resultDomain.amBloodsysPre;
                             this_.allData.amBloodDiasPre=data.resultDomain.amBloodDiasPre;
@@ -344,6 +391,12 @@
                 });
             },
             LuRu(){
+                if(this.allData.nurseEventIds[this.allData_i]){
+                    if(!this.allData.eventTimes[this.allData_i]){
+                       tip.failed('请选择事件时间',1500);
+                        return
+                    }
+                }
                 let this_=this;
                 $.ajax({
                     type:'post',
@@ -361,7 +414,7 @@
                         bpms:this_.allData.bpms,
                         breathings:this_.allData.breathings,
                         nurseEventIds:this_.allData.nurseEventIds,
-                        eventTimes:this_.allData.eventTimes,
+                        eventTimes:this_.handle_eventTimes(),
                         marks:this_.allData.marks,
                         amBloodsysPre:this_.allData.amBloodsysPre,
                         amBloodDiasPre:this_.allData.amBloodDiasPre,
@@ -395,7 +448,6 @@
         },
         created:function(){
             this.url=this.$store.state.url;
-            this.url='http://7.0.0.114:8083/StarTrekMED';
         },
         beforeMount:function () {
             let this_=this;
