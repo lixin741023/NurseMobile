@@ -9,6 +9,7 @@ Vue.use(Vuex);
 import 'mint-ui/lib/style.min.css';
 import './styles/global.less';
 
+
 import 'jquery';//exp
 import 'better-scroll'//poz;
 import './plugins/indigo.js';
@@ -61,8 +62,11 @@ const vueCase=new Vue({
     store
 }).$mount('#app');
 
-// setInterval(()=>{
-//    con('AAA',store.state.HuanZhe)
-// },1000);
+import mui from './plugins/mui-master/dist/js/mui.js';
+mui.plusReady(function() {
+    plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
+    plus.navigator.setStatusBarBackground('#617FDE');//设置状态栏的颜色
+});
+
 
 export {vueCase};

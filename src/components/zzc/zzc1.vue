@@ -19,6 +19,6 @@
         left: 0;
         right: 0;
         z-index: 5;
-        background-color: rgba(0,0,0,.7);
+        /*background-color: rgba(0,0,0,.7);*/
     }
 </style>

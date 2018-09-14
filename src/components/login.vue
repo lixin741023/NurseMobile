@@ -34,6 +34,8 @@
 </template>
 
 <script>
+    import mui from '../plugins/mui-master/dist/js/mui.js';
+
     import {tip,con,userId,platform_YiHu} from '../js/global.js';
     import zzc1 from './zzc/zzc1.vue';
     export default {
@@ -105,6 +107,10 @@
                                 this_.$router.push({name:'optionA'});
 
                                 localStorage.setItem('EchartsUrl',this_.url);
+                                mui.plusReady(function() {
+                                    plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
+                                    plus.navigator.setStatusBarBackground('#27B6F5');//设置状态栏的颜色
+                                });
                             });
                         }
                     }

@@ -216,7 +216,7 @@
                         if(data.error){
                             tip.failed(data.message,1500);
                         }else{
-                            tip.success('提交成功');
+                            tip.success('交班成功');
                             this.query_JiaoBan();
                             this.query_recentRecord();
                         }
