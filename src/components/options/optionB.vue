@@ -1,8 +1,7 @@
 <template>
     <div class="optionB">
-        <p>optionB</p>
-        <div  class="fzf_CSS">
-            <img src="../../images/404.png" alt="">
+        <div class="systemText">
+            功能模块开发中……
         </div>
     </div>
 </template>

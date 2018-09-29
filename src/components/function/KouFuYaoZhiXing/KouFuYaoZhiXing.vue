@@ -1,5 +1,5 @@
 <template>
-    <div class="YiZhuZhiXing">
+    <div class="KouFuYaoZhiXing">
         <div class="systemText">
             功能模块开发中……
         </div>
@@ -8,13 +8,13 @@
 
 <script>
     export default {
-        name: "YiZhuZhiXing"
+        name: "KouFuYaoZhiXing"
     }
 </script>
 
 <style scoped lang="less">
     @import url('../../../styles/custom.less');
-    .YiZhuZhiXing{
+    .KouFuYaoZhiXing{
         .componentsInit;
     }
 </style>

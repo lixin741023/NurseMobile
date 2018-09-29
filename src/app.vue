@@ -1,6 +1,6 @@
 <template>
     <div class="app">
-        <transition :name="animate">
+        <transition :name="modelz">
             <router-view></router-view>
         </transition>
         <bottomNav v-if="whether_bottomNav"></bottomNav>
@@ -13,32 +13,28 @@
     export default {
         data:()=>({
             whether_bottomNav:true,
-            animate:undefined
+            modelz:undefined
         }),
         methods:{
-            animationControlOFroute(c,d){
+            amtiiz(c,d){
                 let targetRoute_name=c.name;
                 let sourceRoute_name=d.name;
                 let targetRoute_length=c.path.split('/').length;
                 let sourceRoute_length=d.path.split('/').length;
                 if(sourceRoute_name==='login'){
-                    con('路由动画-登陆','fade');
-                    this.animate='fade';
+                    this.modelz='fade';
                     return
                 }
                 if(targetRoute_length===sourceRoute_length){
-                    con('路由动画-平级','fade');
-                    this.animate='fade';
+                    this.modelz='fade';
                     return
                 }
                 if(targetRoute_length>sourceRoute_length){
-                    con('路由动画-子TO父','towards_left');
-                    this.animate='towards_left';
+                    this.modelz='towards_left';
                     return;
                 }
                 if(targetRoute_length<sourceRoute_length){
-                    con('路由动画-父TO子','towards_right');
-                    this.animate='towards_right';
+                    this.modelz='towards_right';
                     return
                 }
             }
@@ -58,7 +54,7 @@
                     case 'optionE':this.whether_bottomNav=true;break;
                     default:this.whether_bottomNav=false;break;
                 }
-                this.animationControlOFroute(a,b);
+                this.amtiiz(a,b);
             }
         },
         beforeMount:function(){

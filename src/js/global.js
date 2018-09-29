@@ -43,9 +43,9 @@ class tip {
     }
 }
 function con(text,data) {
-    console.log('----------------------------------------------------------------');
+    console.log('----------------');
     console.log(text,data);
-    console.log('----------------------------------------------------------------');
+    console.log('--------------------------------');
 }
 
 export {url,tip,con,platform_YiHu,platform_YiSheng};

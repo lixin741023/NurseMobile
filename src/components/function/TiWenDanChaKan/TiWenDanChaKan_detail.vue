@@ -38,7 +38,7 @@
         </div>
 
         <div class="chartBox">
-            <div id="main" style="width: 1000px;height: 1000px; border: 1px solid red"></div>
+            <div id="main" style="width: 1000px;height: 1000px;"></div>
             <table class="headerTableData" width="795" cellpadding="0" cellspacing="0">
                 <tr class="hosDate"> <!--住院日期-->
                     <td></td>
