@@ -36,8 +36,8 @@
                 </span>
             </div>
         </div>
-
-        <div class="chartBox">
+        <div style="overflow: auto; padding-bottom: 0.5rem">
+        <div class="chartBox2">
             <div id="main" style="width: 1000px;height: 1000px;"></div>
             <table class="headerTableData" width="795" cellpadding="0" cellspacing="0">
                 <tr class="hosDate"> <!--住院日期-->
@@ -200,7 +200,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
         <div class="control_page">
             <div @click="previousPage">上一页</div>
             <span>-{{nowPage}}-</span>
@@ -230,7 +230,7 @@
                     tip.failed('当前第一页',1500);
                 } else if (this.nowPage >= 1) {
                     this.nowPage--;
-                    this.render_charts(this.TiWenDanChaKan_detail.clinicId,this.nowPage);
+                    drawThreeTestList(this.TiWenDanChaKan_detail.clinicId,this.nowPage);
                 }
             },
             nextPage(){
@@ -238,12 +238,9 @@
                     tip.failed('已是最后一页',1500);
                 } else if (this.nowPage <= this.allPage) {
                     this.nowPage++;
-                    this.render_charts(this.TiWenDanChaKan_detail.clinicId,this.nowPage);
+                    drawThreeTestList(this.TiWenDanChaKan_detail.clinicId,this.nowPage);
                     // drawThreeTestList(clinicId, nowPage);
                 }
-            },
-            render_charts(clinicId,page){
-
             }
         },
         created:function(){
@@ -284,6 +281,7 @@
                         tip.failed(data.message,1500);
                     }else{
                         this_.allPage=data.resultDomain;
+                        this.nowPage=this.allPage;
                     }
                 }
             })
@@ -319,7 +317,7 @@
                 }
             }
         }
-        .chartBox{
+        .chartBox1{
             width: 100%;
             height: 4.1rem;
             margin-top: 0.2rem;
@@ -327,6 +325,101 @@
             border-top: 1px solid black;
             border-bottom: 1px solid black;
             overflow: auto;
+        }
+        .chartBox2{
+            position: relative;
+            margin: 15px auto 0;
+            width: 1000px;
+            background-color: #fff;
+            .headerTableData{
+                font-size: 14px;
+                position: absolute;
+                top: 3px;
+                left: 105px;
+                td{
+                    width: 14.2%;
+                    text-align: center;
+                    color: #333;
+                }
+            }
+            .breathTableData{
+                position: absolute;
+                bottom: 135px;
+                left: 103px;
+                font-size: 12px;
+                tr{
+                    display: flex;
+                    td{
+                        margin: 0;
+                        padding: 0;
+                        width: 19px;
+                        height:20px;
+                        line-height: 20px;
+                        text-align: center;
+                        color: #333;
+                    }
+                }
+            }
+            .bloodData{
+                position: absolute;
+                bottom: 116.5px;
+                left: 103px;
+                font-size: 12px;
+                color: #333;
+                tr{
+                    display: flex;
+                    td{
+                        width:57px;
+                        text-align: center;
+                    }
+                }
+            }
+            .footerTableData{
+                position: absolute;
+                bottom: 12px;
+                left: 103px;
+                font-size: 12px;
+                color: #333;
+                tr{
+                    display: flex;
+                    height:20px;
+                    td{
+                        width: 114px;
+                        text-align: center;
+                    }
+                }
+            }
+            .leftFrame{
+                position: absolute;
+                top: 1px;
+                left: 0;
+                width: 105px;
+                height: 986px;
+                border-left: 1px solid black;
+            }
+            .leftFrameHeader>p{
+                margin: 0;
+                height: 19px;
+                border-top: 1px solid #000;
+                /*border-right: 1px solid #000;*/
+            }
+            .leftFrameHeader>p:nth-of-type(4){
+                height: 49px;
+            }
+            .leftFrameFooter{
+                position: absolute;
+                bottom: -18px;
+                width: 104px;
+            }
+            .leftFrameFooter>p{
+                margin: 0;
+                height: 19px;
+                border-top: 1px solid #000;
+                /*border-right: 1px solid #000;*/
+            }
+            .leftFrameFooter>p:last-child{
+                border-right: 0;
+            }
         }
         .control_page{
             .fixedInit;

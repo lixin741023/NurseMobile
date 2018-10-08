@@ -12,7 +12,8 @@
                 <span v-show="pas" class="fa fa-close" @click="clean('pas',$event)"></span>
             </div>
             <span class="forgetPassword">忘记密码？</span>
-            <button class="loginBtn" @click="login">登录</button>
+            <button v-show="!whether_loginIng" class="loginBtn" @click="login">登录</button>
+            <button v-show="whether_loginIng" disabled="" class="loginBtn">登录中...</button>
         </div>
         <div class="more" @click="more">更多</div>
 
@@ -45,7 +46,8 @@
             pas:123456,
             serverList:[],
             serverItem:'',
-            url:''
+            url:'',
+            whether_loginIng:false
         }),
         components:{
             zzc1
@@ -85,18 +87,24 @@
                 b.target.previousElementSibling.focus();
             },
             login:function () {
+                this.whether_loginIng=true;
                 let this_=this;
                 $.ajax({
                     type:'post',
                     url:this.$store.state.url+'/user/checkLogin',
-                    async:false,
+                    async:true,
                     dataType:'json',
                     data:{
                         username:this.user,
                         password:this.pas,
                         platformId:platform_YiHu
                     },
+                    error:()=>{
+                        tip.failed('网络错误：无法连接到服务器！',2000);
+                        this.whether_loginIng=false;
+                    },
                     success:function(data){
+                        this_.whether_loginIng=false;
                         con('登陆',data);
                         if(data.error){
                             tip.failed(data.message,1500);
@@ -106,7 +114,7 @@
                                 this_.$store.commit('makeSure_operation',data.resultDomain.user);
                                 this_.$router.push({name:'optionA'});
 
-                                localStorage.setItem('EchartsUrl',this_.url);
+                                localStorage.setItem('EchartsUrl',this_.$store.state.url);
                                 mui.plusReady(function() {
                                     plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
                                     plus.navigator.setStatusBarBackground('#27B6F5');
@@ -120,6 +128,7 @@
         beforeMount:function () {
             this.serverList=localStorage.getItem('serverList').split(',');
             this.url=this.serverList[0];
+            this.$store.commit('makeSure_url',this.serverList[0]);
         }
     }
 </script>

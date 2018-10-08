@@ -24,9 +24,9 @@ const store=new Vuex.Store({
        HuanZhe:undefined,
        operation:undefined,
        BingQuJiaoBan__check_KeShi:undefined,
-       url:'http://7.0.0.116:8084/StarTrekMED',
+       // url:undefined,
+       url:'http://7.0.0.111:8084/StarTrekMED',
        optionC_tab_status:undefined,
-       test:123
    },
    mutations:{
        makeSure_HuanZhe(state,data){
@@ -47,7 +47,6 @@ const store=new Vuex.Store({
        },
        makeSure_optionC_tab_status(state,data){
             state.optionC_tab_status=data;
-            con('当前选项卡',data);
        }
     }
 });

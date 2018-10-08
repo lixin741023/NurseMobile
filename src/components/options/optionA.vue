@@ -116,10 +116,8 @@
             whether_search_HuanZhe(){
                 let a=JSON.stringify(this.HuanZhe_Info);
                 if(a==="{}"){
-                    console.log('空：展示搜索框');
                     return true
                 }else{
-                    console.log('非空：展示患者框');
                     return false
                 }
             }
