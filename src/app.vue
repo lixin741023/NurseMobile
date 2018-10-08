@@ -44,7 +44,6 @@
         },
         watch:{
             $route(a,b){
-                con('当前Vuex值',this.$store.state);
                 let nextRouteName=a.name;
                 switch (nextRouteName) {
                     case 'optionA':this.whether_bottomNav=true;break;

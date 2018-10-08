@@ -65,7 +65,7 @@ const vueCase=new Vue({
 import mui from './plugins/mui-master/dist/js/mui.js';
 mui.plusReady(function() {
     plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
-    plus.navigator.setStatusBarBackground('#617FDE');//设置状态栏的颜色
+    plus.navigator.setStatusBarBackground('#617FDE');
 });
 
 

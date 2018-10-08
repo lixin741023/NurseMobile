@@ -34,8 +34,8 @@
 </template>
 
 <script>
+    import { Indicator } from 'mint-ui';
     import mui from '../plugins/mui-master/dist/js/mui.js';
-
     import {tip,con,userId,platform_YiHu} from '../js/global.js';
     import zzc1 from './zzc/zzc1.vue';
     export default {
@@ -53,8 +53,8 @@
         methods:{
             makeSure_server(server){
                 this.$store.commit('makeSure_url',server);
-                this.url=this.$store.state.url;
-                tip.fromTop(`服务器已切换到${this.url}`,2500);
+                tip.fromTop(`服务器已切换到${this.$store.state.url}`,2500);
+
                 $('.login .zzc1').fadeOut('fast');
                 $('.login .serverList').fadeOut('');
             },
@@ -88,7 +88,7 @@
                 let this_=this;
                 $.ajax({
                     type:'post',
-                    url:this.url+'/user/checkLogin',
+                    url:this.$store.state.url+'/user/checkLogin',
                     async:false,
                     dataType:'json',
                     data:{
@@ -109,7 +109,7 @@
                                 localStorage.setItem('EchartsUrl',this_.url);
                                 mui.plusReady(function() {
                                     plus.navigator.setStatusBarStyle("UIStatusBarStyleBlackOpaque");
-                                    plus.navigator.setStatusBarBackground('#27B6F5');//设置状态栏的颜色
+                                    plus.navigator.setStatusBarBackground('#27B6F5');
                                 });
                             });
                         }
