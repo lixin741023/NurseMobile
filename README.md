@@ -7,4 +7,5 @@
 ![load failed](https://github.com/lixin741023/NurseMobile/blob/master/read_me/login2.png)
 ![load failed](https://github.com/lixin741023/NurseMobile/blob/master/read_me/optionA_1.png)
 ![load failed](https://github.com/lixin741023/NurseMobile/blob/master/read_me/optionC_1.png)
+![load failed](https://github.com/lixin741023/NurseMobile/blob/master/read_me/optionC_2.png)
 ![load failed](https://github.com/lixin741023/NurseMobile/blob/master/read_me/fun2-1.png)
